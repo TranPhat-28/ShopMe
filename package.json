@@ -1,0 +1,31 @@
+{
+  "name": "shopme",
+  "version": "1.0.0",
+  "description": "**Description:** There will be 3 types of users (excluding unregistered user): - Unregistered customer: can only view and search products - Customer:     - Edit personal contact information and address     - View and search products     - Add products to cart     - Place orders / purchase     - Applying voucher on orders     - Leave feedback about product     - Chat with seller     - Report to admin     - View personal shopping report - Seller: must be approved by admin to become a seller     - Edit seller contact information and address     - Add / remove products     - Edit products’ information     - Release shop’s voucher (applicable for products from the same seller only)     - View and confirm orders     - View seller report     - Chat with customer     - Report to admin - Admin:     - Approve new seller accounts     - Release global voucher (applicable for any product on the platform)     - Remove any customer / seller account     - Remove any product     - View reports from customer and seller     - View system overall report",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TranPhat-28/ShopMe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TranPhat-28/ShopMe/issues"
+  },
+  "homepage": "https://github.com/TranPhat-28/ShopMe#readme",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-ejs-layouts": "^2.5.1",
+    "mongoose": "^6.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
