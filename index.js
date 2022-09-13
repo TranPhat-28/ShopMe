@@ -32,4 +32,4 @@ const loginRouter = require('./routes/login');
 app.use('/', loginRouter);
 
 // Start the app
-app.listen(5000, console.log('Server started'));
+app.listen(process.env.PORT || 5000, console.log('Server started'));
