@@ -1,33 +1,35 @@
 # ShopMe - A simple e-commerce website 
 **Description:** There will be 3 types of users (excluding unregistered user):
 - Unregistered customer: can only view and search products
-- Customer: - Edit personal contact information and address
-- View and search products
-- Add products to cart
-- Place orders / purchase
-- Applying voucher on orders
-- Leave feedback about product
-- Chat with seller
-- Report to admin
-- View personal shopping report
+- Customer:
+    - Edit personal contact information and address
+    - View and search products
+    - Add products to cart
+    - Place orders / purchase
+    - Applying voucher on orders
+    - Leave feedback about product
+    - Chat with seller
+    - Report to admin
+    - View personal shopping report
 - Seller: must be approved by admin to become a seller
-- Edit seller contact information and address
-- Add / remove products
-- Edit products’ information
-- Release shop’s voucher (applicable for products from the same seller only)
-- View and confirm orders
-- View seller report
-- Chat with customer
-- Report to admin
+    - Edit seller contact information and address
+    - Add / remove products
+    - Edit products’ information
+    - Release shop’s voucher (applicable for products from the same seller only)
+    - View and confirm orders
+    - View seller report
+    - Chat with customer
+    - Report to admin
 - Admin:
-- Approve new seller accounts
-- Release global voucher (applicable for any product on the platform)
-- Remove any customer / seller account
-- Remove any product
-- View reports from customer and seller
-- View system overall report
+    - Approve new seller accounts
+    - Release global voucher (applicable for any product on the platform)
+    - Remove any customer / seller account
+    - Remove any product
+    - View reports from customer and seller
+    - View system overall report
 
 **Timeline:**
+
 | Week | Date | Progress | | ------ | ------ | ------ |
 | Week 1a | Sep 12th - Sep 14th | Detail description, use case diagram, design ERD and DB, design raw UI |
 | Week 1b | Sep 15th - Sep 18th | Implement sign up, log in and user information |
