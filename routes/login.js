@@ -21,8 +21,41 @@ router.get('/register', (req, res) => {
 
 
 // POST Login route
-router.post('/login', (req, res) => {
-    console.log(req.body.email + req.body.password);
+router.post('/login', async (req, res) => {
+    try{
+        // Get all the input from user and check if any fields is empty
+        const email = req.body.email;
+        const password = req.body.password;
+        
+
+
+
+        // Check for missing field(s)
+        if (!email || !password ){
+            console.log("Missing required field(s)");
+            res.send("<script>alert('Missing required field(s)'); window.location.href='/register'; </script>");
+        }
+        else{
+            // Validate email
+            User.findOne({ email: email }).then((user) => {
+                if(!user){
+                    console.log("Incorrect email");
+                    res.send("<script>alert('Incorrect email!'); window.location.href='/login'; </script>");
+                }
+                else{
+                    // Validate password
+                    if (password !== user.password){
+                        console.log("Incorrect password");
+                        res.send("<script>alert('Incorrect password!'); window.location.href='/login'; </script>");
+                    }
+                    else{
+                        console.log('OK');
+                    }
+                }
+            });        
+        }
+    }
+    catch(e){}      
 });
 
 
@@ -37,8 +70,7 @@ router.post('/register', async (req, res) => {
         const confirm = req.body.confirm;
         const phoneNumber = req.body.phone;
         const address = req.body.address;
-        const hashedPass = await bcrypt.hash(password, 10);
-
+        
 
 
         // Check for missing field(s)
@@ -60,12 +92,12 @@ router.post('/register', async (req, res) => {
                 }
                 else{
                     // Hash the provided password
-                    console.log(hashedPass);
+                    //console.log(hashedPass);
 
                     // Get all the input from user and create a new User
                     const newUser = new User({
                         email: email,
-                        password: hashedPass,
+                        password: password,
                         phoneNumber: phoneNumber,
                         address: address
                     });
