@@ -29,7 +29,6 @@
     - View system overall report
 
 **Timeline:**
-
 | Week | Date | Progress |
 | ------ | ------ | ------ |
 | Week 1a | Sep 12th - Sep 14th | Detail description, use case diagram, design ERD and DB, design raw UI |
