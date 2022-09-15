@@ -5,6 +5,8 @@ const User = require('../models/user');
 
 
 
+
+
 // Tell router how to handle request
 // Just like app.get or app.post in index.js
 // GET Login
@@ -14,49 +16,13 @@ router.get('/login', (req, res) => {
 
 
 
+
 // GET Register
 router.get('/register', (req, res) => {
     res.render('register.ejs');
 });
 
 
-// POST Login route
-router.post('/login', async (req, res) => {
-    try{
-        // Get all the input from user and check if any fields is empty
-        const email = req.body.email;
-        const password = req.body.password;
-        
-
-
-
-        // Check for missing field(s)
-        if (!email || !password ){
-            console.log("Missing required field(s)");
-            res.send("<script>alert('Missing required field(s)'); window.location.href='/register'; </script>");
-        }
-        else{
-            // Validate email
-            User.findOne({ email: email }).then((user) => {
-                if(!user){
-                    console.log("Incorrect email");
-                    res.send("<script>alert('Incorrect email!'); window.location.href='/login'; </script>");
-                }
-                else{
-                    // Validate password
-                    if (password !== user.password){
-                        console.log("Incorrect password");
-                        res.send("<script>alert('Incorrect password!'); window.location.href='/login'; </script>");
-                    }
-                    else{
-                        console.log('OK');
-                    }
-                }
-            });        
-        }
-    }
-    catch(e){}      
-});
 
 
 
@@ -92,23 +58,23 @@ router.post('/register', async (req, res) => {
                 }
                 else{
                     // Hash the provided password
-                    //console.log(hashedPass);
+                    bcrypt.hash(password, 10).then(hash => {
 
-                    // Get all the input from user and create a new User
-                    const newUser = new User({
+                        // Get all the input from user and create a new User
+                        const newUser = new User({
                         email: email,
-                        password: password,
+                        password: hash,
                         phoneNumber: phoneNumber,
                         address: address
-                    });
+                        });
 
-                    // Save to the database
-                    newUser.save()
-                    .then(() => {
-                        console.log('Registration success! Redirecting to login...');
-                        res.send("<script>alert('Registration success! Redirect to login now'); window.location.href='/login'; </script>");
-                    })
-                    .catch(e => console.log(e));
+                        // Save to the database
+                        newUser.save()
+                        .then(() => {
+                            console.log('Registration success! Redirecting to login...');
+                            res.send("<script>alert('Registration success! Redirect to login now'); window.location.href='/login'; </script>");
+                        })
+                    });
                 }
             });        
         }
