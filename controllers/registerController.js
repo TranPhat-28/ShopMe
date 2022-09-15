@@ -3,32 +3,14 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
-
-
-
-
-// Tell router how to handle request
-// Just like app.get or app.post in index.js
-// GET Login
-router.get('/login', (req, res) => {
-   res.render('login.ejs');
-});
-
-
-
-
-// GET Register
-router.get('/register', (req, res) => {
+// Function to render Register page
+const registerView = (req, res) => {
     res.render('register.ejs');
-});
+};
 
-
-
-
-
-// POST Register route
-// Use async function
-router.post('/register', async (req, res) => {
+// Function to handle POST to Register
+// Use Async function
+const postRegister = async (req, res) => {
     try{
         // Get all the input from user and check if any fields is empty
         const email = req.body.email;
@@ -82,9 +64,10 @@ router.post('/register', async (req, res) => {
     catch(e){
         console.log(e);
     }
-});
+};
 
-
-
-// Export the router
-module.exports = router;
+// Export the function for route file to use
+module.exports = {
+    registerView,
+    postRegister
+};

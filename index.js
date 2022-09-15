@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const flash = require('express-flash');
 dotenv.config();
 
 
@@ -15,6 +16,8 @@ dotenv.config();
 app.set('view engine', 'ejs');
 // Get information from html form
 app.use(express.urlencoded({ extended: false }));
+// Send message
+app.use(flash());
 // Set the directory for views
 app.set('views', __dirname + '/views');
 // Set the directory for public files
@@ -38,55 +41,35 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+// Require passport config file
 require('./auth/passport')(passport);
 
 
 
 
-// Root route - will redirect to login
+// ROOT route - will redirect to login
 app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
-// POST Login route
-app.post('/login', (req, res, next) => {
-    // Get all the input from user and check if any fields is empty
-    const email = req.body.email;
-    const password = req.body.password;
-
-    if (!email || !password) {
-        console.log("Missing required field(s)");
-        res.send("<script>alert('Missing required field(s)'); window.location.href='/login'; </script>");
-    }
-    else {
-        try{
-            passport.authenticate('local', {
-                successRedirect: "/test",
-                failureRedirect: "/login",
-                failureFlash: true,
-            })(req, res, next);
-        }catch(e){
-            console.log(e.message);
-        }
-    }
-});
-
-
-
-// Import the routers
-const registerRouter = require('./routes/login');
-//const loginRouter = require('./auth/passport');
-const homeRouter = require('./routes/home');
-
-const User = require('./models/user');
-// Tell the app to use the router
+// Import router
+// Tell the app to use the routers we defined
 // 1st param: root dir
 // 2nd param: which router to handle the request
+// Eg: app.use('/', registerRouter);
+
+// Register route
+const registerRouter = require('./routes/registerRoute');
 app.use('/', registerRouter);
-//app.use('/', loginRouter);
-app.use('/', homeRouter);
+// Login route
+const loginRouter = require('./routes/loginRoute');
+app.use('/', loginRouter);
+// Home route
+const homeRoute = require('./routes/homeRoute');
+app.use('/', homeRoute);
 
 
 
-// Start the app
+
+// START THE APP
 app.listen(process.env.PORT || 5000, console.log('Server started'));
