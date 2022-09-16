@@ -4,7 +4,7 @@
 
 body{
     height: 100vh;
-    background-image: url("../../media/background.png");
+    background-image: url("/background.png");
     background-size: cover;
 }
 
@@ -21,4 +21,25 @@ body{
 
 #switch:hover{
     font-weight: bold;
+}
+
+span{
+    margin: 2rem;
+}
+
+@media only screen and (max-width: 576px) {
+    .btn-primary{
+        width: 100%;
+    }
+
+    .btn-secondary{
+        width: 100%;
+    }
+
+    span{
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
 }
