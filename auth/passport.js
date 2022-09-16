@@ -25,7 +25,7 @@ module.exports = function(passport) {
                             return done(null, user);
                         } else {
                             console.log("Wrong password");
-                            return done({});
+                            return done();
                         }
                     });
                 })

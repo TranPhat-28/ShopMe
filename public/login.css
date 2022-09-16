@@ -14,11 +14,11 @@ body{
     background-color: white;
 }
 
-#help{
+#switch{
     cursor: pointer;
     transition-duration: .1s;
 }
 
-#help:hover{
+#switch:hover{
     font-weight: bold;
 }

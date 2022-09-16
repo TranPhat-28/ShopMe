@@ -21,7 +21,8 @@ app.use(flash());
 // Set the directory for views
 app.set('views', __dirname + '/views');
 // Set the directory for public files
-app.set(express.static('public'));
+//app.set(express.static('public'));
+app.use(express.static( __dirname + '/public'));
 
 
 
@@ -64,9 +65,12 @@ app.use('/', registerRouter);
 // Login route
 const loginRouter = require('./routes/loginRoute');
 app.use('/', loginRouter);
-// Home route
-const homeRoute = require('./routes/homeRoute');
-app.use('/', homeRoute);
+
+
+
+// Test route - for testing only
+const testRoute = require('./routes/testRoute');
+app.use('/', testRoute);
 
 
 
