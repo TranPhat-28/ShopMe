@@ -8,7 +8,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const flash = require('express-flash');
 dotenv.config();
-
+// Method override - for logging out
+const methodOverride = require('method-override');
 
 
 
@@ -44,6 +45,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 // Require passport config file
 require('./auth/passport')(passport);
+// Use method override
+app.use(methodOverride('_method'));
 
 
 
@@ -58,6 +61,16 @@ app.get('/', (req, res) => {
 // 1st param: root dir
 // 2nd param: which router to handle the request
 // Eg: app.use('/', registerRouter);
+
+
+// Logout route
+// Use methodOverride to override POST to DELETE
+app.delete('/logout', function(req, res, next) {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/login');
+    });
+});
 
 // Register route
 const registerRouter = require('./routes/registerRoute');

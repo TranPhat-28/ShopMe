@@ -20,7 +20,7 @@ const postLogin = (req, res, next) => {
     else {
         try {
             passport.authenticate('local', {
-                successRedirect: "/test",
+                successRedirect: "/home",
                 failureRedirect: "/login",
                 failureFlash: true,
             })(req, res, next);

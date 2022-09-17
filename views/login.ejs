@@ -24,7 +24,7 @@
                     <input type="password" name="password" class="form-control"><br>
                     <input type="submit" class="btn btn-primary" value="Login">
                     <span>or</span>
-                    <input class="btn btn-secondary" value="Continue as a guess">
+                    <input class="btn btn-secondary" value="Continue as a guess" type="button" id="guess">
                     <br><br>
                     <div id="switch" class="form-text text-center">
                         Don't have an account yet? Register now.</div>
@@ -45,8 +45,14 @@
             integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
             crossorigin="anonymous"></script>
         <script>
+            // Redirect to Register when clicking on the small text
             document.getElementById('switch').onclick = () => {
                 window.location.href='/register';
+            };
+
+            // Continue as a guess
+            document.getElementById('guess').onclick = () => {
+                window.location.href='/home';
             };
         </script>
     </body>

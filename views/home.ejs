@@ -35,6 +35,18 @@
                     </form>
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <!--Will be render if NOT LOGGED IN-->
+                        <% if ( email === null) { %> 
+                        <li class="nav-item mx-2 px-2">
+                            <a class="nav-link" aria-current="page" href="/login">Log in</a>
+                        </li>
+
+                        <li class="nav-item mx-2 px-2">
+                            <a class="nav-link" aria-current="page" href="/register">Sign up</a>
+                        </li>
+                        <% }else{ %> 
+
+                        <!--Will be render if LOGGED IN-->
                         <li class="nav-item mx-2 px-2">
                             <a class="nav-link" aria-current="page" href="#">
                                 Cart
@@ -49,14 +61,24 @@
                                 Settings
                             </a>
                             <ul class="dropdown-menu">
+                                <li><p class="dropdown-item-text mb-0" style="font-weight: bold;">Welcome back!</p></li>
+                                <li><p class="dropdown-item-text"><%= email%></p></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Action A</a></li>
                                 <li><a class="dropdown-item" href="#">Action B</a></li>
                                 <li><a class="dropdown-item" href="#">Action C</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Action D</a></li>
-                                <li><a class="dropdown-item" href="#">Action E</a></li>
+                                <li><a class="dropdown-item" href="#">Change information</a></li>
+                                <li>
+                                <!--Use a form to send POST to log out-->
+                                    <form action="/logout?_method=DELETE" method="POST">
+                                        <button type="submit" class="dropdown-item">Log out</button>
+                                    </form>
+                                </li>
                             </ul>
                         </li>
+
+                        <% } %> 
                     </ul>
                 </div>
             </div>

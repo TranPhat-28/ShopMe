@@ -1,7 +1,7 @@
 // Check if user has been authenticated
 // Use this function to authenticated user trying to
 // access protected route
-const protectedRoute = (req, res, next) => {
+module.exports = protectedRoute = (req, res, next) => {
     // If user has been authenticated, call next()
     if (req.isAuthenticated()){
         return next();
@@ -14,16 +14,12 @@ const protectedRoute = (req, res, next) => {
 
 // The opposite of the above
 // Use this to prevent already authenticated user from 
-// accessing login page again
-const allowAccess = (req, res, next) => {
+// accessing login or register page again
+// If already logged in, redirect to home page
+module.exports = allowAccess = (req, res, next) => {
     if (!req.isAuthenticated()){
         return next();
     }
-
-    res.redirect('/test');
+    res.send("<script>alert('You have already logged in! Please log out first'); window.location.href='/home'; </script>");
+    //res.redirect('/test');
 }
-
-module.exports = {
-    protectedRoute,
-    allowAccess
-};
