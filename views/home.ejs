@@ -9,13 +9,341 @@
             rel="stylesheet"
             integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
             crossorigin="anonymous">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="./home.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
     <body>
-        <!--Body-->
-        <div class="container d-flex align-items-center justify-content-center h-100">
+        <!--Header - Navbar-->
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg py-3">
+            <div class="container">
+                <a class="navbar-brand" href="#">ShopMe</a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
+                    
+                    <form class="d-flex mt-3 mt-lg-0" role="search">
+                        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+                        <button id="search-btn" class="btn btn-outline-secondary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item mx-2 px-2">
+                            <a class="nav-link" aria-current="page" href="#">
+                                Cart
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item dropdown mx-2 px-2">
+                            <a class="nav-link dropdown-toggle" href="#"
+                                role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Settings
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action A</a></li>
+                                <li><a class="dropdown-item" href="#">Action B</a></li>
+                                <li><a class="dropdown-item" href="#">Action C</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Action D</a></li>
+                                <li><a class="dropdown-item" href="#">Action E</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!--Body outermost container-->
+        <div class="container pb-5" style="background-color: white;">
+            <!--Hero section - carousel-->
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-interval="2000">
+                <div class="carousel-inner">
+                <div class="active carousel-item">
+                    <img src="./banner1.jpg" class="d-block w-100 img-fluid" alt="BannerA">
+                </div>
+                <div class="carousel-item">
+                    <img src="./banner2.jpg" class="d-block w-100 img-fluid" alt="BannerB">
+                </div>
+                <div class="carousel-item">
+                    <img src="./banner3.jpg" class="d-block w-100 img-fluid" alt="BannerC">
+                </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <!--Category list-->
+            <div class="container" id="category-container">
+                <p class="responsive-title">Category</p>
+                <!--Row 1-->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-tv responsive-icon"></i>
+                        <span class="responsive-text">Electronics</span>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-heartbeat responsive-icon"></i>
+                        <span class="responsive-text">Healthcares</span>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-tools responsive-icon"></i>
+                        <span class="responsive-text">Tools</span>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-couch responsive-icon"></i>
+                        <span class="responsive-text">Lifestyles</span>
+                    </div>
+                </div>
+                <!--Row 2-->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-tshirt responsive-icon"></i>
+                        <span class="responsive-text">Clothings</span>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-ring responsive-icon"></i>
+                        <span class="responsive-text">Accessories</span>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-hand-sparkles responsive-icon"></i>
+                        <span class="responsive-text">Cosmetics</span>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                        <i class="fas fa-shoe-prints responsive-icon"></i>
+                        <span class="responsive-text">Shoes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--New arrivals-->
+            <!--Title-->
+            <p class="responsive-title">New arrivals</p>
             
+            <!--The list container-->
+            <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product1.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product1.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product1.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product1.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product1.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product1.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--Best sellers-->
+            <!--Title-->
+            <p class="responsive-title">Best sellers</p>
+            
+            <!--The list container-->
+            <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product2.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product2.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product2.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product2.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product2.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="card-container m-2">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src="product2.jpg" alt="Product image">
+                        <div class="card-body">
+                            <h5 class="card-title">150,000 VND</h5>
+                            <p class="card-text">Innisfree facewash</p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--Carousel section for voucher-->
+            <p class="responsive-title">Get your voucher now</p>
+            <div class="voucher container mt-2">
+                <img src="./voucher.jpg" class="img-fluid rounded" alt="Get voucher">
+                <!--Overlay-->
+                <div class="overlay">
+                    <span class="overlay-text">View details</span>
+                </div>
+            </div>
         </div>
+
+     
+        
 
         <!--JAVASCRIPT-->
         <script
@@ -25,10 +353,6 @@
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
-            crossorigin="anonymous"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
-            integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
             crossorigin="anonymous"></script>
     </body>
 </html>

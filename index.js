@@ -65,6 +65,9 @@ app.use('/', registerRouter);
 // Login route
 const loginRouter = require('./routes/loginRoute');
 app.use('/', loginRouter);
+// Home route
+const homeRouter = require('./routes/homeRoute');
+app.use('/', homeRouter);
 
 
 
