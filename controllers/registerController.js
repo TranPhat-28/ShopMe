@@ -23,19 +23,19 @@ const postRegister = async (req, res) => {
 
         // Check for missing field(s)
         if (!email || !password || !confirm || !phoneNumber || !address){
-            console.log("Missing required field(s)");
+            //console.log("Missing required field(s)");
             res.send("<script>alert('Missing required field(s)'); window.location.href='/register'; </script>");
         }
         // Password and confirm must match
         else if (password !== confirm){
-            console.log("Password does not match");
+            //console.log("Password does not match");
             res.send("<script>alert('Password does not match'); window.location.href='/register'; </script>");
         }
         else{
             // Check for duplicated email
             User.exists({ email: email }).then((user) => {
                 if(user){
-                    console.log("This email already existed!");
+                    //console.log("This email already existed!");
                     res.send("<script>alert('This email already existed!'); window.location.href='/register'; </script>");
                 }
                 else{
@@ -53,7 +53,7 @@ const postRegister = async (req, res) => {
                         // Save to the database
                         newUser.save()
                         .then(() => {
-                            console.log('Registration success! Redirecting to login...');
+                            //console.log('Registration success! Redirecting to login...');
                             res.send("<script>alert('Registration success! Redirect to login now'); window.location.href='/login'; </script>");
                         })
                     });

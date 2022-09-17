@@ -13,24 +13,27 @@
     </head>
     <body>
         <!--Body-->
-        <div class="container d-flex align-items-center justify-content-center h-100">
+        <div class="container d-flex align-items-center justify-content-center"
+            style="height: 100%">
             <div class="jumbotron p-5">
                 <!--Form-->
-                <form action="/login" method="post">
-                    <h2 class="mb-4">Login into your account</h2>
-                    <label for="email" class="form-label m-1">Email</label><br>
-                    <input type="email" name="email" class="form-control"><br>
+                <form action="/register" method="post">
+                    <h2 class="mb-4">Change your information</h2>
                     <label for="password" class="form-label m-1">Password</label><br>
-                    <input type="password" name="password" class="form-control"><br>
-                    <input type="submit" class="btn btn-primary" value="Login">
-                    <span>or</span>
-                    <input class="btn btn-secondary" value="Continue as a guess" type="button" id="guess">
+                    <input type="password" name="password" class="form-control" required><br>
+                    <label for="confirm" class="form-label m-1">Confirm password</label><br>
+                    <input type="password" name="confirm" class="form-control" required><br>
+                    <label for="phone" class="form-label m-1">Phone number</label><br>
+                    <input type="number" name="phone" class="form-control" required><br>
+                    <label for="address" class="form-label m-1">Address</label><br>
+                    <input type="text" name="address" class="form-control" required><br>
+
+                    <input type="submit" class="btn btn-primary" id="submit" value="Update">
                     <br><br>
-                    <div id="switch" class="form-text text-center">
-                        Don't have an account yet? Register now.</div>
                 </form>
             </div>
         </div>
+
         <!--JAVASCRIPT-->
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
@@ -44,16 +47,5 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
             integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
             crossorigin="anonymous"></script>
-        <script>
-            // Redirect to Register when clicking on the small text
-            document.getElementById('switch').onclick = () => {
-                window.location.href='/register';
-            };
-
-            // Continue as a guess
-            document.getElementById('guess').onclick = () => {
-                window.location.href='/home';
-            };
-        </script>
     </body>
 </html>

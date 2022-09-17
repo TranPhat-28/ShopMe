@@ -5,7 +5,7 @@ const router = express.Router();
 const { registerView, postRegister } = require('../controllers/registerController');
 // Import the authenticate function from protect.js
 // To check if user logged in or not before accessing this route
-const allowAccess = require('../auth/protect');
+const allowAccess = require('../auth/allowAccess');
 
 // Tell router how to handle request
 // Just like app.get or app.post in index.js

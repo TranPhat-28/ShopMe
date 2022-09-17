@@ -1,0 +1,1 @@
+Product image must be a square before handling

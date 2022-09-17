@@ -14,7 +14,7 @@ const postLogin = (req, res, next) => {
     const password = req.body.password;
 
     if (!email || !password) {
-        console.log("Missing required field(s)");
+        //console.log("Missing required field(s)");
         res.send("<script>alert('Missing required field(s)'); window.location.href='/login'; </script>");
     }
     else {
