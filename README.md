@@ -1,23 +1,24 @@
 # ShopMe - A simple e-commerce website 
-**Description:** There will be 3 types of users
-- Unregistered customer: can only view and search products
+**Description:**
+- Guess: can only view and search products
 - Customer:
-    - Edit personal contact information and address
-    - View and search products
-    - Add products to cart
-    - Place orders / purchase
+    - Edit personal information (password, phone number, address)
+    - View and search for products
+    - Add to or remove products from cart
+    - View cart
+    - Place orders
     - Applying voucher on orders
     - Leave feedback about product
-    - Leave system report for admin
-    - View personal shopping report
+    - Report to admin
+    - View personal shopping report / summary
 - Admin:
     - Add / remove products
     - Edit products’ information
-    - Release voucher
+    - Release vouchers
     - View and confirm orders
     - View reports from customer
     - Remove any customer
-    - View system overall report
+    - View system overall report / summary
 
 **Timeline:**
 | Week | Date | Progress |
