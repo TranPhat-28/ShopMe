@@ -36,7 +36,7 @@
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <!--Will be render if NOT LOGGED IN-->
-                        <% if ( email === null) { %> 
+                        <% if ( role === null) { %> 
                         <li class="nav-item mx-2 px-2">
                             <a class="nav-link" aria-current="page" href="/login">Log in</a>
                         </li>
@@ -44,9 +44,11 @@
                         <li class="nav-item mx-2 px-2">
                             <a class="nav-link" aria-current="page" href="/register">Sign up</a>
                         </li>
+                        <!--ADMIN-->
+                        <% }else if (role === 'admin'){  %>
+                            <script>window.location.href='/admin';</script>
                         <% }else{ %> 
-
-                        <!--Will be render if LOGGED IN-->
+                        <!--CUSTOMER-->
                         <li class="nav-item mx-2 px-2">
                             <a class="nav-link" aria-current="page" href="#">
                                 Cart

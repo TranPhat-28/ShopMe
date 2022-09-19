@@ -50,9 +50,9 @@ app.use(methodOverride('_method'));
 
 
 
-// ROOT route - will redirect to login
+// ROOT route - will redirect to Home
 app.get('/', (req, res) => {
-    res.redirect('/login');
+    res.redirect('/home');
 });
 
 // Import router
