@@ -19,8 +19,9 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 // Send message
 app.use(flash());
-// Set the directory for views
-app.set('views', __dirname + '/views');
+// Set the directory for views (and admin view in the subfolder)
+//app.set('views', __dirname + '/views');
+app.set('views', [__dirname + '/views', __dirname + '/views/admin']);
 // Set the directory for public files: media and css
 app.use(express.static( __dirname + '/public'));
 
@@ -84,11 +85,19 @@ app.use('/', changeInfoRouter);
 const homeRouter = require('./routes/homeRoute');
 app.use('/', homeRouter);
 
+///////////////
+// ADMIN ROUTE
+///////////////
+// Root ADMIN route will redirect to the first feature of ADMIN Panel
+app.get('/admin', (req, res) => {
+    res.redirect('/admin/customersAndProducts');
+})
 
-
-// Test route - for testing only
-const testRoute = require('./routes/testRoute');
-app.use('/', testRoute);
+// Admin router
+// All admin routes will be: /admin/<routeName>
+// Specify /admin for the first argument
+const adminRouter = require('./routes/adminRoute');
+app.use('/admin', adminRouter);
 
 
 
