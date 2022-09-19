@@ -23,8 +23,8 @@
 **Timeline:**
 | Week | Date | Progress |
 | ------ | ------ | ------ |
-| Week 1a | Sep 12th - Sep 14th | Initial planning, detail description, use case diagram, design ERD and DB, design raw UI |
-| Week 1b | Sep 12th - Sep 15th | Implement Login and Signup |
-| Week 2 | Sep 19th - Sep 25th | ... |
+| Week 1a | Sep 12th - Sep 14th | Initial planning, detail description, use case diagram, ERD and DB |
+| Week 1b | Sep 12th - Sep 15th | Implement Login and Signup, static Homepage |
+| Week 2 | Sep 19th - Sep 25th | Implement admin page |
 | Week 3 | Sep 26th - Oct 2nd | ... |
 | Week 4 | Oct 3rd - Oct 9th | ... |
