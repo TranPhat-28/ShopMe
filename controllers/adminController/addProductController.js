@@ -1,7 +1,15 @@
-// GET Home
+// GET addProduct View
 const addProductView = (req, res) => {
-    res.send('ADD PRODUCT');
+    res.render('addProduct.ejs');
+}
+
+// POST to addProduct: add new product to database
+const postAddProduct = (req, res) => {
+    console.log('Add new product to database - Implemeting...');
 }
 
 // Export module
-module.exports = addProductView;
+module.exports = {
+    addProductView,
+    postAddProduct
+};
