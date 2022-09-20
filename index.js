@@ -101,6 +101,22 @@ app.use('/admin', adminRouter);
 
 
 
+// Test route = For testing purpose only
+const Product = require('./models/product');
+
+
+app.get("/test", function(req, res, next) {
+    Product.findOne({}, function(err, product) {
+        if (err) { return next(err); }
+
+        const b64 = Buffer.from(product.productImage.img.data).toString('base64');
+        const mimeType = 'image/' + product.productImage.img.contentType; // e.g., image/png
+    
+        res.send(`<img src="data:${mimeType};base64,${b64}" />`);
+    });
+})
+
+
 
 // START THE APP
 app.listen(process.env.PORT || 5000, console.log('Server started'));
