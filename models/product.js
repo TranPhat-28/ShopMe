@@ -38,7 +38,11 @@ const productSchema = new mongoose.Schema({
     productImage: {
         type: imageSchema,
         required: true
-    }
+    },
+    dateAdded: {
+        type: Date,
+        default: Date.now()
+    },
 });
 
 const Product = mongoose.model('Product', productSchema);

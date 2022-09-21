@@ -45,7 +45,7 @@
                             <a class="nav-link" aria-current="page" href="/register">Sign up</a>
                         </li>
                         <!--ADMIN-->
-                        <% }else if (role === 'admin'){  %>
+                        <% }else if ( role === 'admin'){  %>
                             <script>window.location.href='/admin';</script>
                         <% }else{ %> 
                         <!--CUSTOMER-->
@@ -64,7 +64,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><p class="dropdown-item-text mb-0" style="font-weight: bold;">Welcome back!</p></li>
-                                <li><p class="dropdown-item-text"><%= email%></p></li>
+                                <li><p class="dropdown-item-text"><%= email %></p></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Action A</a></li>
                                 <li><a class="dropdown-item" href="#">Action B</a></li>
@@ -161,14 +161,14 @@
             
             <!--The list container-->
             <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
-
+                <% for (let i = 0; i < newArrivals.length; i++ ) { %>
                 <!--Card-->
                 <div class="card-container m-2">
                     <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
+                        <img class="card-img-top" src='data:<%=newArrivals[i].mimeType%>;base64,<%=newArrivals[i].base64%>' alt="ProductIMG" />
                         <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
+                            <h5 class="card-title"> <%= newArrivals[i].productPrice %> VND</h5>
+                            <p class="card-text"> <%= newArrivals[i].productName %></p>
                         </div>
                         <!--Overlay-->
                         <div class="overlay">
@@ -176,81 +176,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">250,000 VND</h5>
-                            <p class="card-text">Bottle combo</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
+                <% } %>
             </div>
 
 
@@ -261,14 +187,14 @@
             
             <!--The list container-->
             <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
-
+                <% for (let i = 0; i < bestSellers.length; i++ ) { %>
                 <!--Card-->
                 <div class="card-container m-2">
                     <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
+                        <img class="card-img-top" src='data:<%=bestSellers[i].mimeType%>;base64,<%=bestSellers[i].base64%>' alt="ProductIMG" />
                         <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
+                            <h5 class="card-title"> <%= bestSellers[i].productPrice %>  VND</h5>
+                            <p class="card-text"> <%= bestSellers[i].productName %> </p>
                         </div>
                         <!--Overlay-->
                         <div class="overlay">
@@ -276,81 +202,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Card-->
-                <div class="card-container m-2">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src="/media/productDetail.jpg" alt="Product image">
-                        <div class="card-body">
-                            <h5 class="card-title">150,000 VND</h5>
-                            <p class="card-text">New watch</p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
+                <% } %>
             </div>
 
 

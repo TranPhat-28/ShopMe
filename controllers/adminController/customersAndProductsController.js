@@ -7,28 +7,31 @@ const customersAndProductsView = async (req, res) => {
     const emailsArr = [];
     const productsArr = [];
 
-    User.find({}, function(err, users) {
-        users.forEach(function(user) {
-            emailsArr.push(user.email);
-        });
+    const users = await User.find({}).catch(err => {
+        // handle error here
+        console.log('Cannot fetch data: ' + err);
+        res.render('customersAndProducts.ejs');
+    });
 
-        // Currently I'm nesting this because
-        // I have not found out how to access
-        // emailsArr outside of User.find()
-        Product.find({}, function(err, products) {
-            products.forEach(function(product) {
-                productsArr.push(product.productName);
-            });
-            
-            // It works here
-            //console.log(emailsArr, productsArr);
+    const products = await Product.find({}).catch(err => {
+        // handle error here
+        console.log('Cannot fetch data: ' + err);
+        res.render('customersAndProducts.ejs');
+    });
 
-            res.render('customersAndProducts.ejs', {users: emailsArr,
-                                                    usersCount: emailsArr.length,
-                                                    products: productsArr,
-                                                    productsCount: productsArr.length});
-        });        
-    });    
+    //Your stuff
+    users.forEach(function(user) {
+        emailsArr.push(user.email);
+    });
+
+    products.forEach(function(product) {
+        productsArr.push(product.productName);
+    });
+
+    res.render('customersAndProducts.ejs', {users: emailsArr,
+                                            usersCount: emailsArr.length,
+                                            products: productsArr,
+                                            productsCount: productsArr.length});
 }
 
 // Export module
