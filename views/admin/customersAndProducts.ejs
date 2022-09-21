@@ -41,24 +41,18 @@
                     <div class="col-sm-12 col-md-8 p-3">
                         <div class="container border rounded p-3">
                             <!--All customers listed here-->
-                            <h5>All active customers</h5>
+                            <h5>All active customers: <%= usersCount %></h5>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
-                                <li class="list-group-item">Customer A</li> 
-                                <li class="list-group-item">Customer B</li> 
-                                <li class="list-group-item">Customer C</li> 
-                                <li class="list-group-item">Customer D</li> 
-                                <li class="list-group-item">Customer E</li> 
-                                <li class="list-group-item">Customer F</li> 
+                                <% for (let i = 0; i < usersCount; i++){ %> 
+                                    <li class="list-group-item"> <%= users[i] %> </li> 
+                                <% } %> 
                             </ul>
                             <!--All products listed here-->
-                            <h5 class="mt-3">All active products</h5>
+                            <h5 class="mt-3">All products: <%= productsCount %></h5>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
-                                <li class="list-group-item">Product A</li>
-                                <li class="list-group-item">Product B</li>
-                                <li class="list-group-item">Product C</li>
-                                <li class="list-group-item">Product D</li>
-                                <li class="list-group-item">Product E</li>
-                                <li class="list-group-item">Product F</li>
+                                <% for (let i = 0; i < productsCount; i++){ %> 
+                                    <li class="list-group-item"> <%= products[i] %> </li> 
+                                <% } %> 
                             </ul>
                         </div>
                     </div>

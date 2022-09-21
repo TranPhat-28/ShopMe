@@ -31,12 +31,13 @@ const postAddProduct = (req, res, next) => {
             const imgData = req.file.buffer;
             const imgType = req.file.mimetype;
 
-            // Get all the input from user and create a new User
+            // Get all the input from user and create a new Product
             const newProduct = new Product({
                 productName: req.body.productName,
                 description: req.body.description,
                 price: req.body.price,
                 stockQuantity: req.body.quantity,
+                sold: 0,
                 productImage: {
                     name: imgName,
                     img: {
@@ -49,7 +50,6 @@ const postAddProduct = (req, res, next) => {
             // Save to the database
             newProduct.save()
             .then(() => {
-                //console.log('Registration success! Redirecting to login...');
                 res.send("<script>alert('Successfully added a new product'); window.location.href='/admin/addProduct'; </script>");
             })
             
