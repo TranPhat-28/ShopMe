@@ -84,13 +84,18 @@ app.use('/', changeInfoRouter);
 // Home route
 const homeRouter = require('./routes/homeRoute');
 app.use('/', homeRouter);
+// View product detail route
+const productDetailRoute = require('./routes/productDetailRoute');
+app.use('/', productDetailRoute);
 
-///////////////
+
+
+/////////////////////////////
 // ADMIN ROUTE
-///////////////
+/////////////////////////////
 // Root ADMIN route will redirect to the first feature of ADMIN Panel
 app.get('/admin', (req, res) => {
-    res.redirect('/admin/customersAndProducts');
+    res.redirect('/admin/orders');
 })
 
 // Admin router

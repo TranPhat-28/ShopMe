@@ -9,7 +9,7 @@
             rel="stylesheet"
             integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
             crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/home.css">
+        <link rel="stylesheet" href="/css/admin.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
     <body style="background-color: grey;">
@@ -32,7 +32,7 @@
         <div class="container" style="background-color: white;">
             <!--Heading-->
             <h2 class="pt-3">Customers and Products</h2>
-            <p class="pb-3 ps-3">Here you can remove any customer or product</p>
+            <p class="pb-3 ps-3">Here you can view and edit any customer or product</p>
 
             <!--Container for the content-->
             <div class="container mt-3">
@@ -42,16 +42,26 @@
                         <div class="container border rounded p-3">
                             <!--All customers listed here-->
                             <h5>All active customers: <%= usersCount %></h5>
+                            <p class="text-secondary">Click on the user to remove</p>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
-                                <% for (let i = 0; i < usersCount; i++){ %> 
-                                    <li class="list-group-item"> <%= users[i] %> </li> 
+                                <% for (let i = 0; i < usersCount; i++){ %>
+                                    <form class="w-100" method="post" action="customersAndProducts"
+                                    onsubmit="return confirm('Do you really want to remove this user?');">
+                                        <input type="hidden" name="type" value="user">
+                                        <input type="hidden" name="email" value="<%=users[i]%>">
+                                        <button class="list-group-item text-start w-100" type="submit"> <%= users[i] %> </button> 
+                                    </form>
                                 <% } %> 
                             </ul>
                             <!--All products listed here-->
                             <h5 class="mt-3">All products: <%= productsCount %></h5>
+                            <p class="text-secondary">Click on the product to edit</p>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
                                 <% for (let i = 0; i < productsCount; i++){ %> 
-                                    <li class="list-group-item"> <%= products[i] %> </li> 
+                                    <form class="w-100" method="post" action="customersAndProducts">
+                                        <input type="hidden" name="type" value="product">
+                                        <button class="list-group-item text-start w-100" type="submit"> <%= products[i] %> </button> 
+                                    </form> 
                                 <% } %> 
                             </ul>
                         </div>
@@ -63,6 +73,9 @@
                             <h3 class="mb-4">Administrator Panel</h3>
         
                             <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a class="nav-link" href="/admin/orders">Orders</a>
+                                </li>
                                 <li class="list-group-item active" aria-current="true">
                                     <a class="nav-link active" href="#">Customers and Products</a>
                                 </li>

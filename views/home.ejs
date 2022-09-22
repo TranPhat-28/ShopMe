@@ -163,7 +163,7 @@
             <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
                 <% for (let i = 0; i < newArrivals.length; i++ ) { %>
                 <!--Card-->
-                <div class="card-container m-2">
+                <div class="card-container m-2" id="<%= newArrivals[i].productId %>" onclick="viewDetail(this)">
                     <div class="card p-2 shadow">
                         <img class="card-img-top" src='data:<%=newArrivals[i].mimeType%>;base64,<%=newArrivals[i].base64%>' alt="ProductIMG" />
                         <div class="card-body">
@@ -189,7 +189,7 @@
             <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
                 <% for (let i = 0; i < bestSellers.length; i++ ) { %>
                 <!--Card-->
-                <div class="card-container m-2">
+                <div class="card-container m-2" id="<%= bestSellers[i].productId %>" onclick="viewDetail(this)">
                     <div class="card p-2 shadow">
                         <img class="card-img-top" src='data:<%=bestSellers[i].mimeType%>;base64,<%=bestSellers[i].base64%>' alt="ProductIMG" />
                         <div class="card-body">
@@ -230,5 +230,11 @@
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
+        <script>
+            function viewDetail(obj) {
+                //window.alert(obj.id);
+                window.location.href = '/productDetail?id=' + obj.id;
+            }
+        </script>
     </body>
 </html>

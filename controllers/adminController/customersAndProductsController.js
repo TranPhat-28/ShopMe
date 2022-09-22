@@ -34,5 +34,16 @@ const customersAndProductsView = async (req, res) => {
                                             productsCount: productsArr.length});
 }
 
+// POST
+// Will handle delete user or delete / edit product
+const postCustomersAndProducts = (req, res) => {
+    console.log(req.body.type + req.body.email);
+    // Handle here
+}
+
+
 // Export module
-module.exports = customersAndProductsView;
+module.exports = {
+    customersAndProductsView,
+    postCustomersAndProducts
+};

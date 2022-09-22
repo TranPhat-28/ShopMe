@@ -36,6 +36,7 @@ const homeView = async (req, res) => {
         newArrivalsArr.push({
             productName: item.productName,
             productPrice: item.price,
+            productId: item._id,
             mimeType: mimeType,
             base64: b64
         });
@@ -56,6 +57,7 @@ const homeView = async (req, res) => {
         bestSellersArr.push({
             productName: best.productName,
             productPrice: best.price,
+            productId: best._id,
             mimeType: mimeType,
             base64: b64
         });
