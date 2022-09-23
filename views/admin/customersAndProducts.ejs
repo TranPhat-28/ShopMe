@@ -32,7 +32,7 @@
         <div class="container" style="background-color: white;">
             <!--Heading-->
             <h2 class="pt-3">Customers and Products</h2>
-            <p class="pb-3 ps-3">Here you can view and edit any customer or product</p>
+            <p class="pb-3 ps-3">Here you can view and edit or remove any customer or product</p>
 
             <!--Container for the content-->
             <div class="container mt-3">
@@ -42,28 +42,41 @@
                         <div class="container border rounded p-3">
                             <!--All customers listed here-->
                             <h5>All active customers: <%= usersCount %></h5>
-                            <p class="text-secondary">Click on the user to remove</p>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
                                 <% for (let i = 0; i < usersCount; i++){ %>
-                                    <form class="w-100" method="post" action="customersAndProducts"
-                                    onsubmit="return confirm('Do you really want to remove this user?');">
-                                        <input type="hidden" name="type" value="user">
-                                        <input type="hidden" name="email" value="<%=users[i]%>">
-                                        <button class="list-group-item text-start w-100" type="submit"> <%= users[i] %> </button> 
-                                    </form>
+                                    <li class="list-group-item" id="<%= users[i] %> " onclick="getUserDetail(this)"><%= users[i] %></li>
                                 <% } %> 
                             </ul>
+                            <!--Detail view for User-->
+                            <h5 class="mt-3">User detail:</h5>
+                            <ul class="container w-100 border rounded pt-2" id="detail-view-user" style="height: 200px">
+                            </ul>
+                            <!--Remove user-->
+                            <form method="post" action="/admin/customersAndProducts"
+                            onsubmit="return confirm('Do you really want to remove this user?');">
+                                <input type="hidden" name="email" value="" id="remove-user">
+                                <input type="submit" class="btn btn-primary" value="Remove user">
+                            </form>
+
+                            <br><br><br>
+                
                             <!--All products listed here-->
                             <h5 class="mt-3">All products: <%= productsCount %></h5>
-                            <p class="text-secondary">Click on the product to edit</p>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
                                 <% for (let i = 0; i < productsCount; i++){ %> 
-                                    <form class="w-100" method="post" action="customersAndProducts">
-                                        <input type="hidden" name="type" value="product">
-                                        <button class="list-group-item text-start w-100" type="submit"> <%= products[i] %> </button> 
-                                    </form> 
+                                    <li class="list-group-item" id="<%= productId[i] %> " onclick="getProductDetail(this)"><%= products[i] %></li>
                                 <% } %> 
                             </ul>
+                            <!--Detail view for Product-->
+                            <h5 class="mt-3">Product detail:</h5>
+                            <ul class="container w-100 border rounded pt-2" id="detail-view-product" style="height: 200px">
+                            </ul>
+                            <!--Remove product-->
+                            <form method="post" action="/admin/customersAndProducts"
+                            onsubmit="return confirm('Do you really want to remove this product?');">
+                                <input type="hidden" name="productId" value="" id="remove-product">
+                                <input type="submit" class="btn btn-primary" value="Remove product">
+                            </form>
                         </div>
                     </div>
         
@@ -100,5 +113,64 @@
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
+        <script>
+            // View product detail
+            function getProductDetail(tag) {
+                var id = tag.id;
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    // Action to be performed when the response is ready:
+                        const res = JSON.parse(xhttp.responseText);
+                        var view = document.getElementById('detail-view-product');
+                        var myInput = document.getElementById('remove-product');
+                        myInput.value = id;
+                        view.innerHTML = "";
+                        for (var key in res) {
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(key + ": " + res[key]));
+                            view.appendChild(li);
+                        }
+                    }
+                    else{
+                        //console.log("Something went wrong");
+                    }
+                };
+                //(method, url, async)
+                xhttp.open("GET", "/admin/productDetail?id=" + id, true);
+                xhttp.send();
+            }
+
+
+
+            // View user detail
+            function getUserDetail(tag) {
+                var email = tag.id;
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    // Action to be performed when the response is ready:
+                        const res = JSON.parse(xhttp.responseText);
+                        var view = document.getElementById('detail-view-user');
+                        var myInput = document.getElementById('remove-user');
+                        myInput.value = email;
+                        view.innerHTML = "";
+                        for (var key in res) {
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(key + ": " + res[key]));
+                            view.appendChild(li);
+                        }
+                    }
+                    else{
+                        //console.log("Something went wrong");
+                    }
+                };
+                //(method, url, async)
+                xhttp.open("GET", "/admin/userDetail?email=" + email, true);
+                xhttp.send();
+            }
+        </script>
     </body>
 </html>

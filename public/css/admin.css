@@ -23,3 +23,15 @@ body{
 .list-group-item:hover{
     background-color: rgb(223, 223, 223);
 }
+
+#detail-view-user{
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    padding-left: 2rem;
+}
+
+#detail-view-product{
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    padding-left: 2rem;
+}

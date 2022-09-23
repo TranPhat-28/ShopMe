@@ -10,7 +10,7 @@ const adminProtected = require('../auth/adminProtect');
 
 // Import modules
 const ordersView = require('../controllers/adminController/ordersController');
-const { customersAndProductsView, postCustomersAndProducts } = require('../controllers/adminController/customersAndProductsController');
+const { customersAndProductsView, productDetailView, postCustomersAndProducts, userDetailView } = require('../controllers/adminController/customersAndProductsController');
 const { addProductView, postAddProduct } = require('../controllers/adminController/addProductController');
 
 // Because inside index.js we specified '/admin' before
@@ -25,9 +25,15 @@ router.get('/orders', adminProtected, ordersView);
 
 
 // GET customersAndProducts
-router.get('/customersAndProducts', adminProtected, customersAndProductsView);
+//router.get('/customersAndProducts', adminProtected, customersAndProductsView);
+router.get('/customersAndProducts', customersAndProductsView);
 // POST customersAndProducts
-router.post('/customersAndProducts', adminProtected, postCustomersAndProducts);
+router.post('/customersAndProducts', postCustomersAndProducts);
+// Sub route for AJAX fetching product / user detail information
+// For product
+router.get('/productDetail', productDetailView);
+// For user
+router.get('/userDetail', userDetailView);
 
 
 
