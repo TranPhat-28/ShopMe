@@ -81,12 +81,15 @@ app.use('/', loginRouter);
 // Change information route
 const changeInfoRouter = require('./routes/changeInfoRoute');
 app.use('/', changeInfoRouter);
+// Change password route
+const changePasswordRouter = require('./routes/changePasswordRoute');
+app.use('/', changePasswordRouter);
 // Home route
 const homeRouter = require('./routes/homeRoute');
 app.use('/', homeRouter);
 // View product detail route
-const productDetailRoute = require('./routes/productDetailRoute');
-app.use('/', productDetailRoute);
+const productDetailRouter = require('./routes/productDetailRoute');
+app.use('/', productDetailRouter);
 
 
 

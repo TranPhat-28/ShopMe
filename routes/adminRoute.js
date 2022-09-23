@@ -25,15 +25,14 @@ router.get('/orders', adminProtected, ordersView);
 
 
 // GET customersAndProducts
-//router.get('/customersAndProducts', adminProtected, customersAndProductsView);
-router.get('/customersAndProducts', customersAndProductsView);
+router.get('/customersAndProducts', adminProtected, customersAndProductsView);
 // POST customersAndProducts
-router.post('/customersAndProducts', postCustomersAndProducts);
+router.post('/customersAndProducts', adminProtected, postCustomersAndProducts);
 // Sub route for AJAX fetching product / user detail information
 // For product
-router.get('/productDetail', productDetailView);
+router.get('/productDetail', adminProtected, productDetailView);
 // For user
-router.get('/userDetail', userDetailView);
+router.get('/userDetail', adminProtected, userDetailView);
 
 
 
