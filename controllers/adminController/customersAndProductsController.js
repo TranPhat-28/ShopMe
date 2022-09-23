@@ -48,7 +48,8 @@ const productDetailView = async (req, res) => {
                                     description: product.description,
                                     price: product.price,
                                     stock: product.stockQuantity,
-                                    sold: product.sold};
+                                    sold: product.sold,
+                                    category: product.category};
     res.send(simplifiedProductObj);
 }
 

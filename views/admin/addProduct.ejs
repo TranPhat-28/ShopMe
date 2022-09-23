@@ -43,14 +43,31 @@
                             <!--Form-->
                             <form action="/admin/addProduct" method="post" enctype="multipart/form-data">
                                 <h2 class="mb-4">Add a new product</h2>
+
                                 <label for="productName" class="form-label m-1">Product name</label><br>
-                                <input type="text" name="productName" class="form-control"><br>
+                                <input type="text" name="productName" class="form-control" required><br>
+
                                 <label for="description" class="form-label m-1">Description</label><br>
-                                <input type="text" name="description" class="form-control"><br>
+                                <input type="text" name="description" class="form-control" required><br>
+
                                 <label for="price" class="form-label m-1">Price</label><br>
-                                <input type="number" name="price" class="form-control"><br>
+                                <input type="number" name="price" class="form-control" required><br>
+
                                 <label for="quantity" class="form-label m-1">Amount / Quantity</label><br>
-                                <input type="number" name="quantity" class="form-control"><br>
+                                <input type="number" name="quantity" class="form-control" required><br>
+
+                                <label for="category" class="form-label m-1">Category</label><br>
+                                <select name="category" class="form-control" required>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Healthcares">Healthcares</option>
+                                    <option value="Tools">Tools</option>
+                                    <option value="Lifestyles">Lifestyles</option>
+                                    <option value="Clothings">Clothings</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Cosmetics">Cosmetics</option>
+                                    <option value="Shoes">Shoes</option>
+                                </select><br>
+
                                 <label for="picture" class="form-label m-1">Picture</label><br>
                                 <p class="text-secondary">*Image must be PNG/JPEG and square (same height and width)</p>
                                 <input id="file" type="file" name="picture" class="form-control" accept="image/png, image/jpeg"><br>

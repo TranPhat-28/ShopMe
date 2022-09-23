@@ -20,8 +20,9 @@ const postAddProduct = (req, res, next) => {
     const description = req.body.description;
     const price = req.body.price;
     const quantity = req.body.quantity;
+    const category = req.body.category;
 
-    if (!productName || !description || !price || !quantity || !req.file){
+    if (!productName || !description || !price || !quantity || !req.file || !category){
         res.send("<script>alert('Missing required field(s)'); window.location.href='/admin/addProduct'; </script>");
     }
     else{
@@ -38,6 +39,7 @@ const postAddProduct = (req, res, next) => {
                 price: req.body.price,
                 stockQuantity: req.body.quantity,
                 sold: 0,
+                category: category,
                 productImage: {
                     name: imgName,
                     img: {

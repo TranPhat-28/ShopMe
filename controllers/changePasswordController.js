@@ -45,7 +45,6 @@ const postChangePassword = (req, res) => {
                                     res.send('<script>window.alert("Password updated successfully!"); window.location.href="/home";</script>')
                                 }
                             });
-                        
                         });
                     }
                     // Old password is wrong

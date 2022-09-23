@@ -99,11 +99,12 @@
                     <p>Description: <%=productDescription%> </p>
                     <p>In stock: <%= productStock %> </p>
                     <p>Sold: <%= productSold %> </p>
+                    <p>Category: <%= productCategory %></p>
 
 
                     <!-- If NOT LOGGED IN, ask for login -->
                     <% if ( role === null) { %> 
-                    <button class="btn btn-primary">Login now to buy this product</button>    
+                    <button class="btn btn-primary" onclick="window.location.href='/login'" >Login now to buy this product</button>    
                     <% }else{ %> 
                     <!-- For input quantity -->
                     <!-- Only available for LOGGED IN user-->
@@ -112,7 +113,7 @@
                     <!--Container below product detail for button-->
                     <div class="container mt-3">
                         <button class="btn btn-primary">Buy now</button>
-                        <button class="btn btn-secondary ms-3">Add to cart</button>
+                        <button class="btn btn-secondary ms-3" onclick="addToCart()">Add to cart</button>
                     </div>
                     <% } %> 
                 </div>
@@ -129,8 +130,16 @@
             </div>
         </div>
 
-     
-        
+        <!--Hidden div for SUCCESS-->
+        <div class="pop-up" id="popupSuccess">
+            <i class="fas fa-check-circle m-2" style="color: green"></i>
+            <h3 class="text m-2">Added to cart</h3>
+        </div>
+        <!--Hidden div for FAILED-->
+        <div class="pop-up" id="popupFailed">
+            <i class="fas fa-times-circle m-2" style="color: red"></i>
+            <h3 class="text m-2">Something went wrong</h3>
+        </div>
 
         <!--JAVASCRIPT-->
         <script
@@ -141,5 +150,27 @@
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            function addToCart(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // SUCCESS popup
+                        $('#popupSuccess').fadeToggle(200, 'linear', () => {
+                            setTimeout(() => {$('#popupSuccess').fadeToggle(200, 'linear')}, 800)
+                        }).css('display', 'flex');
+                    }
+                    else{
+                        // FAILED popup
+                        $('#popupFailed').fadeToggle(200, 'linear', () => {
+                            setTimeout(() => {$('#popupFailed').fadeToggle(200, 'linear')}, 800)
+                        }).css('display', 'flex');
+                    }
+                };
+                xhttp.open("GET", "ajax_info.txt", true);
+                xhttp.send();
+            }
+        </script>
     </body>
 </html>

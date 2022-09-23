@@ -28,3 +28,27 @@ body{
 .navbar-brand{
     font-family: 'Titan One', cursive;
 }
+
+.pop-up{
+    background-color: black;
+    border-radius: 20px;
+    opacity: 0.8;
+    width: 30%;
+    height: 30vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: none;
+}
+
+.pop-up .text{
+    color: white;
+}
+
+.pop-up .fas{
+    font-size: 4em;
+}

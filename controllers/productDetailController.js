@@ -32,6 +32,7 @@ const productDetailView = async (req, res) => {
     resObj.productPrice = product.price;
     resObj.productStock = product.stockQuantity;
     resObj.productSold = product.sold;
+    resObj.productCategory = product.category;
     resObj.mimeType = mimeType;
     resObj.base64 = b64;
     
