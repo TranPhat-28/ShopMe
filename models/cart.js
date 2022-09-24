@@ -1,5 +1,18 @@
 const mongoose = require('mongoose');
 
+// Schema for storing image
+const imageSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        max: 100
+    },
+    img: {
+        data: Buffer,
+        contentType: String
+    }   
+});
+
 // Schema for storing product
 const cartItemSchema = new mongoose.Schema({
     name: {
@@ -17,7 +30,11 @@ const cartItemSchema = new mongoose.Schema({
     reference: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true,
-    }
+    },
+    productImage: {
+        type: imageSchema,
+        required: true
+    },
 });
 
 // Define the data schema

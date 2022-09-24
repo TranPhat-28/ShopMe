@@ -2,12 +2,34 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 
 // GET
-const cartView = (req, res) => {
+const cartView = async (req, res) => {
     // User information
     const resObj = {};
     resObj.role = req.user.role;
     resObj.email = req.user.email;
+    const resList = [];
+    
 
+    // Query all item id and quantity from cart
+    const myCart = await Cart.findOne({ email: req.user.email }).catch(err => {
+        console.log(err.message);
+    });
+
+    myCart.itemList.forEach((item) => {
+        const b64 = Buffer.from(item.productImage.img.data).toString('base64');
+        const mimeType = 'image/' + item.productImage.img.contentType; // e.g., image/png
+
+        // Push the information to the array
+        resList.push({
+            productName: item.name,
+            productPrice: item.price,
+            productQuantity: item.quantity,
+            mimeType: mimeType,
+            base64: b64
+        });
+    })
+
+    resObj.itemList = resList;
     res.render('cart.ejs', resObj);
 }
 // POST
@@ -40,7 +62,8 @@ const postAddToCart = async (req, res) => {
                     name: product.productName,
                     price: product.price,
                     quantity: orderQuantity,
-                    reference: product._id
+                    reference: product._id,
+                    productImage: product.productImage
                 };
 
                 // Input valid, add to cart
