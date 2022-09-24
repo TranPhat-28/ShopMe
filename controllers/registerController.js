@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const Cart = require('../models/cart');
 
 // Function to render Register page
 const registerView = (req, res) => {
@@ -51,8 +52,15 @@ const postRegister = async (req, res) => {
                         // Save to the database
                         newUser.save()
                         .then(() => {
-                            //console.log('Registration success! Redirecting to login...');
-                            res.send("<script>alert('Registration success! Redirect to login now'); window.location.href='/login'; </script>");
+                            // Create corresponding cart
+                            const newCart = new Cart({
+                                email: email
+                            })
+                            newCart.save()
+                            .then(() => {
+                                //console.log('Registration success! Redirecting to login...');
+                                res.send("<script>alert('Registration success! Redirect to login now'); window.location.href='/login'; </script>");
+                            })    
                         })
                     });
                 }

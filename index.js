@@ -90,6 +90,9 @@ app.use('/', homeRouter);
 // View product detail route
 const productDetailRouter = require('./routes/productDetailRoute');
 app.use('/', productDetailRouter);
+// Cart route
+const cartRouter = require('./routes/cartRoute');
+app.use('/', cartRouter);
 
 
 

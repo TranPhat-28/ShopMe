@@ -50,7 +50,7 @@
                         <% }else{ %> 
                         <!--CUSTOMER-->
                         <li class="nav-item mx-2 px-2">
-                            <a class="nav-link" aria-current="page" href="/cart">
+                            <a class="nav-link" aria-current="page" href="#">
                                 Cart
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
@@ -87,68 +87,16 @@
 
         <!--Body outermost container-->
         <div class="container h-100 pt-4 pb-4" style="background-color: white;">
-            <div class="row">
-                <!--Left panel for product image-->
-                <div class="col-md-6 col-12 d-flex justify-content-center">
-                    <img id="product-image" class="img-fluid" src='data:<%=mimeType%>;base64,<%=base64%>' alt="Product">
-                </div>
-                <!--Right panel for product detail-->
-                <div class="col-md-6 col-12 p-4">
-                    <p style="font-size: 1.5rem;"><%=productName%></p>
-                    <h2 style="font-weight: bold;"><%=productPrice%> VND</h2>
-                    <p>Description: <%=productDescription%> </p>
-                    <p>In stock: <%= productStock %> </p>
-                    <p>Sold: <%= productSold %> </p>
-                    <p>Category: <%= productCategory %></p>
-
-
-                    <!-- If NOT LOGGED IN, ask for login -->
-                    <% if ( role === null) { %> 
-                    <button class="btn btn-primary" onclick="window.location.href='/login'" >Login now to buy this product</button>    
-                    <% }else{ %> 
-                    <!-- For input quantity -->
-                    <!-- Only available for LOGGED IN user-->
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" class="form-control w-25 d-inline" value="1">
-                    <!--Container below product detail for button-->
-                    <!--If out of stock-->
-                        <% if ( productStock === 0 ) { %>
-                        <script>
-                            document.getElementById('quantity').disabled="true";
-                        </script>
-                        <div class="container mt-3 p-3">
-                            <p style="font-weight: bold; color: red">Out of stock</p>
-                        </div>
-                        <% }else{ %> 
-                        <div class="container mt-3">
-                            <button class="btn btn-primary">Buy now</button>
-                            <button class="btn btn-secondary ms-3" onclick="addToCart()">Add to cart</button>
-                        </div>
-                    <% }} %> 
-                </div>
-            </div>
-
-            <!--Row below for comment-->
-            <div class="container mt-3 mt-md-5">
-                <h4>Feedbacks</h4>
+            <h3>Your cart</h3>
+            <div class="container">
                 <ul class="list-group">
-                    <li class="list-group-item">This is a feedbacks</li>
-                    <li class="list-group-item">This is a feedbacks</li>
-                    <li class="list-group-item">This is a feedbacks</li>
-                  </ul>
+                    <li class="list-group-item">
+                        
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <!--Hidden div for SUCCESS-->
-        <div class="pop-up" id="popupSuccess">
-            <i class="fas fa-check-circle m-2" style="color: green"></i>
-            <h3 class="text m-2">Added to cart</h3>
-        </div>
-        <!--Hidden div for FAILED-->
-        <div class="pop-up" id="popupFailed">
-            <i class="fas fa-times-circle m-2" style="color: red"></i>
-            <h4 class="text m-2">Something went wrong</h4>
-        </div>
 
         <!--JAVASCRIPT-->
         <script
@@ -160,34 +108,5 @@
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script>
-            function addToCart(){
-                var urlParams = new URLSearchParams(window.location.search);
-
-                var obj = {
-                    'productId': urlParams.get('id'),
-                    'quantity': $('#quantity').val()
-                };
-
-                $.ajax({
-                    url: '/addToCart',
-                    method: 'POST',
-                    data:obj,
-                    success: function(data) {
-                        // SUCCESS popup
-                        $('#popupSuccess').fadeToggle(200, 'linear', () => {
-                            setTimeout(() => {$('#popupSuccess').fadeToggle(200, 'linear')}, 800)
-                        }).css('display', 'flex');
-                    },
-                    error: function(data) {
-                        // FAILED popup
-                        $('#popupFailed').fadeToggle(200, 'linear', () => {
-                            setTimeout(() => {$('#popupFailed').fadeToggle(200, 'linear')}, 800)
-                        }).css('display', 'flex');
-                        console.log('Failed info :' + data);
-                    }
-                });
-            }
-        </script>
     </body>
 </html>

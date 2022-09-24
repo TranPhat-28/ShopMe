@@ -41,16 +41,11 @@ const customersAndProductsView = async (req, res) => {
 
 // Ajax GET product detail
 const productDetailView = async (req, res) => {
-    const product = await Product.findById(req.query.id).catch(e => {
+    // Query exclude productImage field
+    const product = await Product.findById(req.query.id).select('-productImage').catch(e => {
         console.log('Something went wrong');
     });
-    const simplifiedProductObj = {  productName: product.productName,
-                                    description: product.description,
-                                    price: product.price,
-                                    stock: product.stockQuantity,
-                                    sold: product.sold,
-                                    category: product.category};
-    res.send(simplifiedProductObj);
+    res.send(product);
 }
 
 // Ajax GET user detail
