@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="/css/cart.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
-    <body>
+    <body onload="cal()">
         <!--Header - Navbar-->
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg py-3">
             <div class="container">
@@ -89,21 +89,34 @@
         <div class="container h-100 pt-4 pb-4" style="background-color: white;">
             <h3>Your cart: <%= itemList.length %> </h3>
             <p class="text-secondary ps-3">Click to remove item from cart</p>
-            <div class="container">
-                <ul class="list-group">
+            <div class="container p-0" id="cartContainer">
+                <ul class="list-group w-100">
                     <% if (itemList.length === 0){ %>
                         <li class="list-group-item p-2">No item in the cart yet</li>
                     <% }else{ %>  
                     <% for (let i = 0; i < itemList.length; i++){ %> 
                         <li class="list-group-item">
-                            <img id="product-image" class="img-fluid" 
-                            src='data:<%=itemList[i].mimeType%>;base64,<%=itemList[i].base64%>' alt="Product">
-                            <%= itemList[i].productName %> 
+                            <div class="row">
+                                <div class="container col-4 col-lg-6 d-flex align-items-center">
+                                    <img id="product-image" class="img-fluid" 
+                                    src='data:<%=itemList[i].mimeType%>;base64,<%=itemList[i].base64%>' alt="Product">
+                                </div>
+                                <div class="container col-8 col-lg-3 d-flex flex-column">
+                                    <h5 class="m-1"><%= itemList[i].productName %></h5>
+                                    <p class="ps-3 m-1 text-secondary">Price: <%= itemList[i].productPrice %> VND</p>
+                                    <p class="ps-3 m-1 text-secondary">Quantity: <%= itemList[i].productQuantity %></p>
+                                    <p class="m-1" style="font-weight: bold;">Total: 
+                                        <span class="price"><%= itemList[i].productQuantity * itemList[i].productPrice %></span>
+                                         VND</p>
+                                </div>
+                            </div>
                         </li>
                     <% }} %> 
                     </li>
                 </ul>
             </div>
+
+            <h3 class="container mt-5 w-100 text-end border" style="font-weight: bold;" id="total"></h3>
         </div>
 
 
@@ -117,5 +130,16 @@
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            function cal(){
+                var cost = 0;
+                var price = document.querySelectorAll('.price');
+                price.forEach(item => {
+                    cost += parseInt(item.innerHTML);
+                })
+
+                document.getElementById('total').innerHTML = 'Total: ' + cost + ' VND';
+            }
+        </script>
     </body>
 </html>

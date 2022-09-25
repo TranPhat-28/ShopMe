@@ -29,3 +29,8 @@ body{
 .navbar-brand{
     font-family: 'Titan One', cursive;
 }
+
+#cartContainer{
+    overflow-y: scroll;
+    max-height: 400px;
+}
