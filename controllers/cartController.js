@@ -15,23 +15,58 @@ const cartView = async (req, res) => {
         console.log(err.message);
     });
 
-    myCart.itemList.forEach((item) => {
-        const b64 = Buffer.from(item.productImage.img.data).toString('base64');
-        const mimeType = 'image/' + item.productImage.img.contentType; // e.g., image/png
+    // Check if the product is still active
+    // (Has not been removed by admin)
+    var i = 0;
+    for (i; i < myCart.itemList.length; i++)
+    {
+        var itemOriginal = myCart.itemList[i].reference;
+        let result = await Product.exists({ _id: itemOriginal });
+        if (result === null) {
+            break;
+        }
+    }
 
-        // Push the information to the array
-        resList.push({
-            productId: item._id,
-            productName: item.name,
-            productPrice: item.price,
-            productQuantity: item.quantity,
-            mimeType: mimeType,
-            base64: b64
-        });
-    })
-
-    resObj.itemList = resList;
-    res.render('cart.ejs', resObj);
+    if (i === myCart.itemList.length ){
+        // All product is still active
+        myCart.itemList.forEach((item) => {
+            const b64 = Buffer.from(item.productImage.img.data).toString('base64');
+            const mimeType = 'image/' + item.productImage.img.contentType; // e.g., image/png
+    
+            // Push the information to the array
+            resList.push({
+                productId: item._id,
+                productName: item.name,
+                productPrice: item.price,
+                productQuantity: item.quantity,
+                mimeType: mimeType,
+                base64: b64
+            });
+        })
+    
+        resObj.itemList = resList;
+        res.render('cart.ejs', resObj);
+    }
+    else{
+        // Some products have been removed, perform update cart
+        myCart.itemList.forEach(async item => {
+            // Check for item
+            let result = await Product.exists({ _id: myCart.itemList[i].reference });
+            // If invalid item
+            if (result === null) {
+                Cart.updateOne({ email: req.user.email }, { $pull: {itemList: {_id: myCart.itemList[i]._id}}}, (err, updated) => {
+                    if (err) {
+                        console.log(err.message)
+                    }
+                    else{
+                        //
+                    }
+                })
+            }
+        })
+        // Send notification to user
+        res.send('<script>window.alert("Some product(s) in your cart has been removed by admin. Your cart will be updated automatically"); window.location.href="/cart"</script>')
+    }
 }
 // POST
 const postCart = (req, res) => {
