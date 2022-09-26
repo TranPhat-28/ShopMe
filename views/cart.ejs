@@ -89,34 +89,40 @@
         <div class="container h-100 pt-4 pb-4" style="background-color: white;">
             <h3>Your cart: <%= itemList.length %> </h3>
             <p class="text-secondary ps-3">Click to remove item from cart</p>
+
+            <% if (itemList.length !== 0){ %>
+
             <div class="container p-0" id="cartContainer">
                 <ul class="list-group w-100">
-                    <% if (itemList.length === 0){ %>
-                        <li class="list-group-item p-2">No item in the cart yet</li>
-                    <% }else{ %>  
-                    <% for (let i = 0; i < itemList.length; i++){ %> 
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="container col-4 col-lg-6 d-flex align-items-center">
-                                    <img id="product-image" class="img-fluid" 
-                                    src='data:<%=itemList[i].mimeType%>;base64,<%=itemList[i].base64%>' alt="Product">
-                                </div>
-                                <div class="container col-8 col-lg-3 d-flex flex-column">
-                                    <h5 class="m-1"><%= itemList[i].productName %></h5>
-                                    <p class="ps-3 m-1 text-secondary">Price: <%= itemList[i].productPrice %> VND</p>
-                                    <p class="ps-3 m-1 text-secondary">Quantity: <%= itemList[i].productQuantity %></p>
-                                    <p class="m-1" style="font-weight: bold;">Total: 
-                                        <span class="price"><%= itemList[i].productQuantity * itemList[i].productPrice %></span>
-                                         VND</p>
-                                </div>
+                <% for (let i = 0; i < itemList.length; i++){ %> 
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="container col-4 col-lg-6 d-flex align-items-center">
+                                <img id="product-image" class="img-fluid" 
+                                src='data:<%=itemList[i].mimeType%>;base64,<%=itemList[i].base64%>' alt="Product">
                             </div>
-                        </li>
-                    <% }} %> 
+                            <div class="container col-8 col-lg-3 d-flex flex-column">
+                                <h5 class="m-1"><%= itemList[i].productName %></h5>
+                                <p class="ps-3 m-1 text-secondary">Price: <%= itemList[i].productPrice %> VND</p>
+                                <p class="ps-3 m-1 text-secondary">Quantity: <%= itemList[i].productQuantity %></p>
+                                <p class="m-1" style="font-weight: bold;">Total: 
+                                    <span class="price"><%= itemList[i].productQuantity * itemList[i].productPrice %></span>
+                                     VND</p>
+                            </div>
+                        </div>
                     </li>
+                <% } %> 
                 </ul>
             </div>
 
             <h3 class="container mt-5 w-100 text-end border" style="font-weight: bold;" id="total"></h3>
+            <% } else { %> 
+            <div class="container d-flex flex-column" style="width: fit-content;">
+                <img src="/media/empty.jpg" id="empty" alt="Empty">
+                <h4 class="text-center">Your cart is empty</h4>
+                <button class="btn btn-primary" type="button" onclick="window.location.href='/home'">Continue shopping</button>
+            </div>
+            <% } %> 
         </div>
 
 

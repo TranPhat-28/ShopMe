@@ -1,6 +1,7 @@
 // Import models
 const User = require('../../models/user')
 const Product = require('../../models/product');
+const Cart = require('../../models/cart');
 const mongoose = require('mongoose');
 
 // GET
@@ -83,12 +84,22 @@ const postCustomersAndProducts = (req, res) => {
         const email = req.body.email.trim();
         console.log("Remove user: " + email);
 
+        // Remove user from db
         User.findOneAndRemove({ email: email }, function(err) {
             if (!err) {
-                res.send('<script>window.alert("Successfully removed selected user"); window.location.href="customersAndProducts"</script>');
+                // No error, remove corresponding cart
+                Cart.findOneAndRemove({ email: email }, function(err) {
+                    if (!err) {
+                    // Success
+                    res.send('<script>window.alert("Successfully removed selected user"); window.location.href="customersAndProducts"</script>');
+                    }else{
+                        console.log(err.message);
+                        res.send('<script>window.alert("Something went wrong!"); window.location.href="customersAndProducts"</script>');
+                    }
+                })
             }
             else {
-                console.log(err);
+                console.log(err.message);
                 res.send('<script>window.alert("Something went wrong!"); window.location.href="customersAndProducts"</script>');
             }
         });

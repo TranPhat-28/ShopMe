@@ -10,7 +10,7 @@ const cartView = async (req, res) => {
     const resList = [];
     
 
-    // Query all item id and quantity from cart
+    // Query the corresponding cart
     const myCart = await Cart.findOne({ email: req.user.email }).catch(err => {
         console.log(err.message);
     });
