@@ -21,6 +21,7 @@ const cartView = async (req, res) => {
 
         // Push the information to the array
         resList.push({
+            productId: item._id,
             productName: item.name,
             productPrice: item.price,
             productQuantity: item.quantity,
@@ -75,8 +76,23 @@ const postAddToCart = async (req, res) => {
                         res.send('Success');
                     }
                 });
-            
             }
+        }
+    })
+}
+
+// POST Handling remove from cart
+const postRemoveFromCart = (req, res) => {
+    const productId = req.body.productId;
+    const email = req.user.email;
+    
+    
+    Cart.updateOne({ email: email }, { $pull: {itemList: {_id: productId}}}, (err, updated) => {
+        if (err) {
+            console.log(err.message)
+        }
+        else{
+            res.send('Success')
         }
     })
 }
@@ -85,5 +101,6 @@ const postAddToCart = async (req, res) => {
 module.exports = {
     cartView,
     postCart,
-    postAddToCart
+    postAddToCart,
+    postRemoveFromCart
 }

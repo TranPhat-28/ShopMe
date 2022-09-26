@@ -95,7 +95,7 @@
             <div class="container p-0" id="cartContainer">
                 <ul class="list-group w-100">
                 <% for (let i = 0; i < itemList.length; i++){ %> 
-                    <li class="list-group-item">
+                    <li class="list-group-item cart-item" id="<%= itemList[i].productId %>" onclick="handle(this)">
                         <div class="row">
                             <div class="container col-4 col-lg-6 d-flex align-items-center">
                                 <img id="product-image" class="img-fluid" 
@@ -125,6 +125,16 @@
             <% } %> 
         </div>
 
+        <!--Hidden div for SUCCESS-->
+        <div class="pop-up" id="popupSuccess">
+            <i class="fas fa-check-circle m-2" style="color: green"></i>
+            <h3 class="text m-2">Removed from cart</h3>
+        </div>
+        <!--Hidden div for FAILED-->
+        <div class="pop-up" id="popupFailed">
+            <i class="fas fa-times-circle m-2" style="color: red"></i>
+            <h4 class="text m-2">Something went wrong</h4>
+        </div>
 
         <!--JAVASCRIPT-->
         <script
@@ -137,6 +147,7 @@
             crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
+            // For calculating total cart cost
             function cal(){
                 var cost = 0;
                 var price = document.querySelectorAll('.price');
@@ -145,6 +156,27 @@
                 })
 
                 document.getElementById('total').innerHTML = 'Total: ' + cost + ' VND';
+            }
+
+            // For sending AJAX request to remove item from cart
+            function handle(item){
+                $.ajax({
+                    url: '/removeFromCart',
+                    method: 'POST',
+                    data: { productId: item.id} ,
+                    success: function(data) {
+                        // SUCCESS popup
+                        $('#popupSuccess').fadeToggle(400, 'linear', () => {
+                            location.reload(); 
+                        }).css('display', 'flex');
+                    },
+                    error: function(data) {
+                        $('#popupFailed').fadeToggle(200, 'linear', () => {
+                            setTimeout(() => {$('#popupFailed').fadeToggle(200, 'linear')}, 800)
+                        }).css('display', 'flex');
+                        console.log('Failed info :' + data);
+                    }
+                });
             }
         </script>
     </body>
