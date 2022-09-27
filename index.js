@@ -93,6 +93,9 @@ app.use('/', productDetailRouter);
 // Cart route
 const cartRouter = require('./routes/cartRoute');
 app.use('/', cartRouter);
+// Report to admin route
+const reportRouter = require('./routes/reportRoute');
+app.use('/', reportRouter);
 
 
 

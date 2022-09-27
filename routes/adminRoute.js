@@ -8,10 +8,14 @@ var upload = multer({ storage: storage });
 // Import adminProtect to verify ADMIN
 const adminProtected = require('../auth/adminProtect');
 
-// Import modules
+// Import controllers
 const ordersView = require('../controllers/adminController/ordersController');
 const { customersAndProductsView, productDetailView, postCustomersAndProducts, userDetailView } = require('../controllers/adminController/customersAndProductsController');
 const { addProductView, postAddProduct } = require('../controllers/adminController/addProductController');
+const { userReportView, postUserReport, reportDetailView } = require('../controllers/adminController/userReport');
+
+
+
 
 // Because inside index.js we specified '/admin' before
 // using this router, here we will need <routeName>
@@ -41,5 +45,14 @@ router.get('/addProduct', adminProtected, addProductView);
 // POST addProducts
 // Uploading image to mongoDB Atlas
 router.post('/addProduct', upload.single('picture'), postAddProduct);
+
+
+
+// GET userReport
+router.get('/report', adminProtected, userReportView);
+// GET report detail using AJAX
+router.get('/reportDetail', adminProtected, reportDetailView);
+// POST delete report
+router.post('/report', adminProtected, postUserReport);
 
 module.exports = router;

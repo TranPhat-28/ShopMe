@@ -31,8 +31,8 @@
         <!--Body outermost container-->
         <div class="container" style="background-color: white;">
             <!--Heading-->
-            <h2 class="pt-3">Orders</h2>
-            <p class="pb-3 ps-3">Here you can view all orders</p>
+            <h2 class="pt-3">User report</h2>
+            <p class="pb-3 ps-3">Here you can view reports from users</p>
 
             <!--Container for the content-->
             <div class="container mt-3">
@@ -40,16 +40,26 @@
                     <!--Content-->
                     <div class="col-sm-12 col-md-8 p-3">
                         <div class="container border rounded p-3">
-                            <!--All pending orders listed here-->
-                            <h5>Pending orders:</h5>
+                            <!--All customers listed here-->
+                            <h5>All reports: <%= reportList.length %></h5>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
-                                <li class="list-group-item">Order A</li> 
+                                <% for(let i = 0; i < reportList.length; i++){ %> 
+                                    <li class="list-group-item"
+                                    <% if (reportList[i].status === 'unread') {%>
+                                        style="font-weight: bold"
+                                    <% } %>  
+                                    id="<%=reportList[i].id%>"
+                                    onclick="viewDetail(this)">Report <%= reportList[i].id %></li>
+                                <% } %> 
                             </ul>
-                            <!--All confirmed orders listed here-->
-                            <h5 class="mt-3">Confirmed orders:</h5>
-                            <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
-                                <li class="list-group-item">Order A</li> 
+                            <!--Detail view for User-->
+                            <h5 class="mt-3">Detail:</h5>
+                            <ul class="container w-100 border rounded pt-2 ps-5" style="height: 200px" id="detail-view">
                             </ul>
+                            <form method="post" action="/admin/report" onsubmit="return confirm('Do you really want to delete this report?');">
+                                <input type="hidden" name="deleteId" id="deleteId" value="">
+                                <input type="submit" class="btn btn-primary" value="Delete this report">
+                            </form>
                         </div>
                     </div>
         
@@ -59,17 +69,17 @@
                             <h3 class="mb-4">Administrator Panel</h3>
         
                             <ul class="list-group">
-                                <li class="list-group-item active" aria-current="true">
-                                    <a class="nav-link active" href="#">Orders</a>
+                                <li class="list-group-item">
+                                    <a class="nav-link" href="/admin/orders">Orders</a>
                                 </li>
                                 <li class="list-group-item" aria-current="true">
-                                    <a class="nav-link active" href="/admin/customersAndProducts">Customers and Products</a>
+                                    <a class="nav-link" href="#">Customers and Products</a>
                                 </li>
                                 <li class="list-group-item">
                                     <a class="nav-link" href="/admin/addProduct">Add a new product</a>
                                 </li>
-                                <li class="list-group-item">
-                                    <a class="nav-link" href="/admin/report">User report</a>
+                                <li class="list-group-item active">
+                                    <a class="nav-link" href="#">User report</a>
                                 </li>
                             </ul>
                         </div>
@@ -89,5 +99,38 @@
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
+        <script>
+            // View report detail
+            function viewDetail(tag) {
+                var id = tag.id;
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    // Action to be performed when the response is ready:
+                        const res = JSON.parse(xhttp.responseText);
+                        var view = document.getElementById('detail-view');
+                        view.innerHTML = "";
+                        for (var key in res) {
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(key + ": " + res[key]));
+                            view.appendChild(li);
+                        }
+
+                        // Remove bold from read report
+                        document.getElementById(id).style.fontWeight='normal';
+
+                        // Assign value to input in form for deleting
+                        document.getElementById('deleteId').value=id;
+                    }
+                    else{
+                        //console.log("Something went wrong");
+                    }
+                };
+                //(method, url, async)
+                xhttp.open("GET", "/admin/reportDetail?id=" + id, true);
+                xhttp.send();
+            }
+        </script>
     </body>
 </html>
