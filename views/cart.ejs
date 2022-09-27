@@ -115,7 +115,14 @@
                 </ul>
             </div>
 
-            <h3 class="container mt-5 w-100 text-end border" style="font-weight: bold;" id="total"></h3>
+            <!--Input a voucher-->
+            <form action="/confirmOrder" method="post" class="d-flex flex-column">
+                <input type="text" class="form-control mt-4" name="voucher" placeholder="Enter a voucher number">
+                <h3 class="container mt-4 w-100 text-end pe-0" style="font-weight: bold;" id="total"></h3>
+
+                <input type="hidden" name="total" id="inputTotal">
+                <input class="btn btn-primary ms-auto" type="submit" value="Continue" style="width: fit-content;">
+            </form>
             <% } else { %> 
             <div class="container d-flex flex-column" style="width: fit-content;">
                 <img src="/media/empty.jpg" id="empty" alt="Empty">
@@ -156,6 +163,7 @@
                 })
 
                 document.getElementById('total').innerHTML = 'Total: ' + cost + ' VND';
+                document.getElementById('inputTotal').value=cost;
             }
 
             // For sending AJAX request to remove item from cart

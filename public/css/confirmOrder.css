@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', cursive;
+}
+
+#product-image{
+    width: 80px;
+    height: 80px;
+}
+
+.navbar-brand{
+    font-family: 'Titan One', cursive;
+}
+
+#cartContainer{
+    overflow-y: scroll;
+    max-height: 400px;
+}
+
+.list-group{
+    border-radius: 0;
+}

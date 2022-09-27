@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Controller
-const { cartView, postCart, postAddToCart, postRemoveFromCart } = require('../controllers/cartController');
+const { cartView, postAddToCart, postRemoveFromCart } = require('../controllers/cartController');
 
 // Auth
 const protectedRoute = require('../auth/protectedRoute');

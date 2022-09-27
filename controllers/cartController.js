@@ -68,10 +68,6 @@ const cartView = async (req, res) => {
         res.send('<script>window.alert("Some product(s) in your cart has been removed by admin. Your cart will be updated automatically"); window.location.href="/cart"</script>')
     }
 }
-// POST
-const postCart = (req, res) => {
-
-}
 
 // POST - Handling Add to cart option
 const postAddToCart = async (req, res) => {
@@ -135,7 +131,6 @@ const postRemoveFromCart = (req, res) => {
 
 module.exports = {
     cartView,
-    postCart,
     postAddToCart,
     postRemoveFromCart
 }

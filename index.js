@@ -93,10 +93,14 @@ app.use('/', productDetailRouter);
 // Cart route
 const cartRouter = require('./routes/cartRoute');
 app.use('/', cartRouter);
+// Confirm order route
+// THIS CAN ONLY BE ACCESS BY CLICKING 'NEXT' BUTTON ON CART PAGE
+// DO NOT GRANT ACCESS BY TYPING URL FROM BROWSER
+const confirmOrderRouter = require('./routes/confirmOrderRoute');
+app.use('/', confirmOrderRouter);
 // Report to admin route
 const reportRouter = require('./routes/reportRoute');
 app.use('/', reportRouter);
-
 
 
 /////////////////////////////
