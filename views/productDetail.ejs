@@ -121,7 +121,7 @@
                         </div>
                         <% }else{ %> 
                         <div class="container mt-3">
-                            <button class="btn btn-primary">Buy now</button>
+                            <button class="btn btn-primary" onclick="addToCartAndBuy()">Buy now</button>
                             <button class="btn btn-secondary ms-3" onclick="addToCart()">Add to cart</button>
                         </div>
                     <% }} %> 
@@ -184,6 +184,31 @@
                         $('#popupFailed').fadeToggle(200, 'linear', () => {
                             setTimeout(() => {$('#popupFailed').fadeToggle(200, 'linear')}, 800)
                         }).css('display', 'flex');
+                        console.log('Failed info :' + data);
+                    }
+                });
+            }
+
+
+
+            function addToCartAndBuy(){
+                var urlParams = new URLSearchParams(window.location.search);
+
+                var obj = {
+                    'productId': urlParams.get('id'),
+                    'quantity': $('#quantity').val()
+                };
+
+                $.ajax({
+                    url: '/addToCart',
+                    method: 'POST',
+                    data:obj,
+                    success: function(data) {
+                        // SUCCESS
+                        window.location.href='/cart';
+                    },
+                    error: function(data) {
+                        // FAILED
                         console.log('Failed info :' + data);
                     }
                 });

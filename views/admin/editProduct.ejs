@@ -31,17 +31,29 @@
         <!--Body outermost container-->
         <div class="container" style="background-color: white;">
             <!--Heading-->
-            <h2 class="pt-3">Add new product</h2>
-            <p class="pb-3 ps-3">Here you can add a new product</p>
+            <h2 class="pt-3">Edit a product</h2>
+            <p class="pb-3 ps-3">Here you can edit product information</p>
 
             <!--Container for the content-->
             <div class="container mt-3">
                 <div class="row">
-                    <!--Content-->
                     <div class="col-sm-12 col-md-8 p-3">
+                        <div class="col-12">
+                            <div class="container border rounded p-3 mb-5">
+                            <!--Form for searching product-->
+                                <div>
+                                    <input type="text" id="findProduct" class="form-control" placeholder="Search product name or ID here..." required><br>
+                                    <input type="button" class="btn btn-primary" value="Search by name" onclick="searchName()">
+                                    <input type="button" class="btn btn-secondary" value="Search by ID" onclick="searchID()">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="container border rounded p-3">
                             <!--Form-->
-                            <form action="/admin/addProduct" method="post" enctype="multipart/form-data">
+                            <form action="/admin/editProduct" method="post">
+                                <input type="hidden" name="productID" class="form-control"><br>
+
                                 <label for="productName" class="form-label m-1">Product name</label><br>
                                 <input type="text" name="productName" class="form-control" required><br>
 
@@ -66,11 +78,7 @@
                                     <option value="Shoes">Shoes</option>
                                 </select><br>
 
-                                <label for="picture" class="form-label m-1">Picture</label><br>
-                                <p class="text-secondary">*Image must be PNG/JPEG and square (same height and width)</p>
-                                <input id="file" type="file" name="picture" class="form-control" accept="image/png, image/jpeg"><br>
-
-                                <input type="submit" class="btn btn-primary" value="Add product to database">
+                                <input type="submit" class="btn btn-primary" value="Update product">
                             </form>
                         </div>
                     </div>
@@ -87,11 +95,11 @@
                                 <li class="list-group-item" aria-current="true">
                                     <a class="nav-link" href="/admin/customersAndProducts">Customers and Products</a>
                                 </li>
-                                <li class="list-group-item active">
-                                    <a class="nav-link" href="#">Add a new product</a>
-                                </li>
                                 <li class="list-group-item">
-                                    <a class="nav-link" href="/admin/editProduct">Edit a product</a>
+                                    <a class="nav-link" href="/admin/addProduct">Add a new product</a>
+                                </li>
+                                <li class="list-group-item active">
+                                    <a class="nav-link active" href="#">Edit a product</a>
                                 </li>
                                 <li class="list-group-item">
                                     <a class="nav-link" href="/admin/report">User report</a>
@@ -114,5 +122,69 @@
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+
+            function searchName(){
+                var obj = {
+                    'find': $('#findProduct').val(),
+                };
+
+                $.ajax({
+                    url: '/admin/searchEditName',
+                    method: 'POST',
+                    data:obj,
+                    success: function(data) {
+                        // SUCCESS
+                        if (data === 'No result'){
+                            window.alert(data)
+                        }
+                        else{
+                            $('input[name=productID]').val(data.productID);
+                            $('input[name=productName]').val(data.productName);
+                            $('input[name=description]').val(data.productDesc);
+                            $('input[name=price]').val(data.productPrice);
+                            $('input[name=quantity]').val(data.productQuantity);
+                            $('select[name=category]').val(data.productCategory);
+                        }
+                    },
+                    error: function(data) {
+                        // FAILED
+                        console.log('Failed info :' + data);
+                    }
+                });
+            }
+
+
+            function searchID(){
+                var obj = {
+                    'find': $('#findProduct').val(),
+                };
+
+                $.ajax({
+                    url: '/admin/searchEditID',
+                    method: 'POST',
+                    data:obj,
+                    success: function(data) {
+                        // SUCCESS
+                        if (data === 'No result'){
+                            window.alert(data)
+                        }
+                        else{
+                            $('input[name=productID]').val(data.productID);
+                            $('input[name=productName]').val(data.productName);
+                            $('input[name=description]').val(data.productDesc);
+                            $('input[name=price]').val(data.productPrice);
+                            $('input[name=quantity]').val(data.productQuantity);
+                            $('select[name=category]').val(data.productCategory);
+                        }
+                    },
+                    error: function(data) {
+                        // FAILED
+                        console.log('Failed info :' + data);
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

@@ -13,6 +13,7 @@ const ordersView = require('../controllers/adminController/ordersController');
 const { customersAndProductsView, productDetailView, postCustomersAndProducts, userDetailView } = require('../controllers/adminController/customersAndProductsController');
 const { addProductView, postAddProduct } = require('../controllers/adminController/addProductController');
 const { userReportView, postUserReport, reportDetailView } = require('../controllers/adminController/userReport');
+const { editProductView, searchEditName, searchEditID, postEditProduct } = require('../controllers/adminController/editProductController');
 
 
 
@@ -45,6 +46,18 @@ router.get('/addProduct', adminProtected, addProductView);
 // POST addProducts
 // Uploading image to mongoDB Atlas
 router.post('/addProduct', upload.single('picture'), postAddProduct);
+
+
+
+
+// GET view for editProduct
+router.get('/editProduct', adminProtected, editProductView);
+// Search product for editProduct
+// By name and by ID
+router.post('/searchEditName', adminProtected, searchEditName);
+router.post('/searchEditID', adminProtected, searchEditID);
+// Update product info
+router.post('/editProduct', adminProtected, postEditProduct);
 
 
 
