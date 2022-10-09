@@ -25,6 +25,9 @@ const postAddProduct = (req, res, next) => {
     if (!productName || !description || !price || !quantity || !req.file || !category){
         res.send("<script>alert('Missing required field(s)'); window.location.href='/admin/addProduct'; </script>");
     }
+    else if(price <= 0 || quantity <= 0){
+        res.send("<script>alert('Invalid field(s): price and quantity'); window.location.href='/admin/addProduct'; </script>");
+    }
     else{
         //console.log(req.file);
         try{

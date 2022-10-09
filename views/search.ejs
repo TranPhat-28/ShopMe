@@ -9,8 +9,9 @@
             rel="stylesheet"
             integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
             crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/productDetail.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="/css/search.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body>
         <!--Header - Navbar-->
@@ -86,69 +87,73 @@
         </nav>
 
         <!--Body outermost container-->
-        <div class="container h-100 pt-4 pb-4" style="background-color: white;">
-            <div class="row">
-                <!--Left panel for product image-->
-                <div class="col-md-6 col-12 d-flex justify-content-center">
-                    <img id="product-image" class="img-fluid" src='data:<%=mimeType%>;base64,<%=base64%>' alt="Product">
-                </div>
-                <!--Right panel for product detail-->
-                <div class="col-md-6 col-12 p-4">
-                    <p style="font-size: 1.5rem;"><%=productName%></p>
-                    <h2 style="font-weight: bold;"><%=productPrice%> VND</h2>
-                    <p>Description: <%=productDescription%> </p>
-                    <p>In stock: <%= productStock %> </p>
-                    <p>Sold: <%= productSold %> </p>
-                    <p>Category: <%= productCategory %></p>
+        <div class="container pb-5" style="background-color: white;">
+            <button class="btn btn-outline-secondary m-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Show filter
+            </button>
+              
+            <!--Filter section-->
+            <div class="collapse p-3 border" id="collapseExample">
+                <label for="price" class="form-label m-1">Price range</label><br>
 
+                <label class="form-label ms-4">From: </label>
+                <input type="number" name="min" class="form-control w-25 d-inline">
+                <label class="form-label ms-4">To: </label>
+                <input type="number" name="max" class="form-control w-25 d-inline">
+                <br>
 
-                    <!-- If NOT LOGGED IN, ask for login -->
-                    <% if ( role === null) { %> 
-                    <button class="btn btn-primary" onclick="window.location.href='/login'" >Login now to buy this product</button>    
-                    <% }else{ %> 
-                    <!-- For input quantity -->
-                    <!-- Only available for LOGGED IN user-->
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" class="form-control w-25 d-inline" value="1">
-                    <!--Container below product detail for button-->
-                    <!--If out of stock-->
-                        <% if ( productStock === 0 ) { %>
-                        <script>
-                            document.getElementById('quantity').disabled="true";
-                        </script>
-                        <div class="container mt-3 p-3">
-                            <p style="font-weight: bold; color: red">Out of stock</p>
-                        </div>
-                        <% }else{ %> 
-                        <div class="container mt-3">
-                            <button class="btn btn-primary" onclick="addToCartAndBuy()">Buy now</button>
-                            <button class="btn btn-secondary ms-3" onclick="addToCart()">Add to cart</button>
-                        </div>
-                    <% }} %> 
-                </div>
+                <label for="category" class="form-label m-1">Category</label><br>
+                <select name="category" class="form-control" required>
+                    <option value="Empty"></option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Healthcares">Healthcares</option>
+                    <option value="Tools">Tools</option>
+                    <option value="Lifestyles">Lifestyles</option>
+                    <option value="Clothings">Clothings</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Cosmetics">Cosmetics</option>
+                    <option value="Shoes">Shoes</option>
+                </select>
+
+                <button class="btn btn-outline-primary mt-3" onclick="filter()">Apply filter</button>
             </div>
 
-            <!--Row below for comment-->
-            <div class="container mt-3 mt-md-5">
-                <h4>Feedbacks</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">This is a feedbacks</li>
-                    <li class="list-group-item">This is a feedbacks</li>
-                    <li class="list-group-item">This is a feedbacks</li>
-                  </ul>
+
+            <!--Did not input any product name to search-->
+            <% if (validName == 'NO'){ %> 
+            <div class="container d-flex flex-column align-items-center" style="width: fit-content;">
+                <img src="/media/search.png" id="empty" alt="Empty">
+                <h4 class="text-center">Please input a name to the search bar to search for product</h4>
             </div>
+            <% }else{ %> 
+
+            <!--Search results-->        
+            <!--The list container-->
+            <h3 class="py-4">Showing 10 results per page...</h3>
+            <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
+                <% for (let i = 0; i < result.length; i++ ) { %>
+                <!--Card-->
+                <div class="card-container m-2" id="<%= result[i].productId %>" onclick="viewDetail(this)">
+                    <div class="card p-2 shadow">
+                        <img class="card-img-top" src='data:<%=result[i].mimeType%>;base64,<%=result[i].base64%>' alt="ProductIMG" />
+                        <div class="card-body">
+                            <h5 class="card-title"> <%= result[i].productPrice %> VND</h5>
+                            <p class="card-text"> <%= result[i].productName %></p>
+                        </div>
+                        <!--Overlay-->
+                        <div class="overlay">
+                            <span class="overlay-text">View details</span>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+
+            <% } %> 
         </div>
 
-        <!--Hidden div for SUCCESS-->
-        <div class="pop-up" id="popupSuccess">
-            <i class="fas fa-check-circle m-2" style="color: green"></i>
-            <h3 class="text m-2">Added to cart</h3>
-        </div>
-        <!--Hidden div for FAILED-->
-        <div class="pop-up" id="popupFailed">
-            <i class="fas fa-times-circle m-2" style="color: red"></i>
-            <h4 class="text m-2">Something went wrong</h4>
-        </div>
+     
+        
 
         <!--JAVASCRIPT-->
         <script
@@ -159,59 +164,39 @@
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            function addToCart(){
-                var urlParams = new URLSearchParams(window.location.search);
+            function filter(){
+                let URLfilter = ''
 
-                var obj = {
-                    'productId': urlParams.get('id'),
-                    'quantity': $('#quantity').val()
-                };
+                var url = new URL(window.location.href);
+                var c = url.searchParams.get("name");
 
-                $.ajax({
-                    url: '/addToCart',
-                    method: 'POST',
-                    data:obj,
-                    success: function(data) {
-                        // SUCCESS popup
-                        $('#popupSuccess').fadeToggle(200, 'linear', () => {
-                            setTimeout(() => {$('#popupSuccess').fadeToggle(200, 'linear')}, 800)
-                        }).css('display', 'flex');
-                    },
-                    error: function(data) {
-                        // FAILED popup
-                        $('#popupFailed').fadeToggle(200, 'linear', () => {
-                            setTimeout(() => {$('#popupFailed').fadeToggle(200, 'linear')}, 800)
-                        }).css('display', 'flex');
-                        console.log('Failed info :' + data);
-                    }
-                });
+                let varA = $('input[name=min]').val()
+                let varB = $('input[name=max]').val()
+                let varC = $('select[name=category]').val()
+
+                if( varA !== '' ){
+                    URLfilter += '&min=';
+                    URLfilter += varA;
+                }
+                if( varB !== '' ){
+                    URLfilter += '&max=';
+                    URLfilter += varB;
+                }
+                if( varC !== 'Empty' ){
+                    URLfilter += '&category=';
+                    URLfilter += varC;
+                }
+
+                //console.log('?name=' + c + URLfilter);
+                window.location.href = '?name=' + c + URLfilter
             }
 
 
-
-            function addToCartAndBuy(){
-                var urlParams = new URLSearchParams(window.location.search);
-
-                var obj = {
-                    'productId': urlParams.get('id'),
-                    'quantity': $('#quantity').val()
-                };
-
-                $.ajax({
-                    url: '/addToCart',
-                    method: 'POST',
-                    data:obj,
-                    success: function(data) {
-                        // SUCCESS
-                        window.location.href='/cart';
-                    },
-                    error: function(data) {
-                        // FAILED
-                        console.log('Failed info :' + data);
-                    }
-                });
+        
+            function viewDetail(obj) {
+                //window.alert(obj.id);
+                window.location.href = '/productDetail?id=' + obj.id;
             }
         </script>
     </body>

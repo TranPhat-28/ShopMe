@@ -22,7 +22,7 @@ const homeView = async (req, res) => {
     // To sort in mongoose
     // -1 : latest(newest) to oldest OR highest to lowest
     // NEW ARRIVALS
-    const newArrival = await Product.find({}).sort([['dateAdded', -1]]).limit(5).catch(err => {
+    const newArrival = await Product.find({}).sort([['dateAdded', -1]]).limit(7).catch(err => {
         // handle error here
         console.log('Cannot fetch data: ' + err);
         res.render('customersAndProducts.ejs');
@@ -43,7 +43,7 @@ const homeView = async (req, res) => {
     });
 
     // BEST SELLERS
-    const bestSeller = await Product.find({}).sort([['sold', -1]]).limit(5).catch(err => {
+    const bestSeller = await Product.find({}).sort([['sold', -1]]).limit(6).catch(err => {
         // handle error here
         console.log('Cannot fetch data: ' + err);
         res.render('customersAndProducts.ejs');

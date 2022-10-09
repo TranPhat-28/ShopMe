@@ -27,8 +27,8 @@
 
                 <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
                     
-                    <form class="d-flex mt-3 mt-lg-0" role="search">
-                        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex mt-3 mt-lg-0" role="search" action="/search" method="get">
+                        <input id="search" class="form-control" type="search" name="name" placeholder="Search" aria-label="Search">
                         <button id="search-btn" class="btn btn-outline-secondary" type="submit">
                             <i class="fas fa-search"></i>
                         </button>
@@ -116,38 +116,38 @@
                 <p class="responsive-title">Category</p>
                 <!--Row 1-->
                 <div class="row d-flex justify-content-center">
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Electronics" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-tv responsive-icon"></i>
                         <span class="responsive-text">Electronics</span>
                     </div>
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Healthcares" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-heartbeat responsive-icon"></i>
                         <span class="responsive-text">Healthcares</span>
                     </div>
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Tools" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-tools responsive-icon"></i>
                         <span class="responsive-text">Tools</span>
                     </div>
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Lifestyles" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-couch responsive-icon"></i>
                         <span class="responsive-text">Lifestyles</span>
                     </div>
                 </div>
                 <!--Row 2-->
                 <div class="row d-flex justify-content-center">
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Clothings" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-tshirt responsive-icon"></i>
                         <span class="responsive-text">Clothings</span>
                     </div>
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Accessories" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-ring responsive-icon"></i>
                         <span class="responsive-text">Accessories</span>
                     </div>
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Cosmetics" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-hand-sparkles responsive-icon"></i>
                         <span class="responsive-text">Cosmetics</span>
                     </div>
-                    <div class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2">
+                    <div id="Shoes" class="col-2 d-flex justify-content-center align-items-center flex-column category-item m-1 p-2" onclick="filterCategory(this.id)">
                         <i class="fas fa-shoe-prints responsive-icon"></i>
                         <span class="responsive-text">Shoes</span>
                     </div>
@@ -217,6 +217,11 @@
             </div>
         </div>
 
+        <!--Footer-->
+        <!--<div class="container" style="height: 400px; background-color: rgb(26, 26, 26);">
+            <h3 style="color: white">Footer section</h3>
+        </div>-->
+
      
         
 
@@ -233,6 +238,10 @@
             function viewDetail(obj) {
                 //window.alert(obj.id);
                 window.location.href = '/productDetail?id=' + obj.id;
+            }
+
+            function filterCategory(id){
+                window.location.href = '/search?cateOnly=' + id;
             }
         </script>
     </body>

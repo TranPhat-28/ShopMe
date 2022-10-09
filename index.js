@@ -101,6 +101,9 @@ app.use('/', confirmOrderRouter);
 // Report to admin route
 const reportRouter = require('./routes/reportRoute');
 app.use('/', reportRouter);
+// Search route
+const searchRouter = require('./routes/searchRoute');
+app.use('/', searchRouter);
 
 
 /////////////////////////////
