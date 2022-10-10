@@ -15,29 +15,42 @@ const productDetailView = async (req, res) => {
         resObj.email = req.user.email;
     }
 
-    // If no ID is in URL, redirect
+    // If no ID is submitted, redirected to home
+    if (!req.query.id) {
+        res.redirect('/home')
+    }
+    else{
         // Find the product
         var product = await Product.findById(req.query.id).catch(err => {
-            console.log('Error fetching product');
+            //console.log('Error fetching product');
             console.log(err);
         })
 
-        // Handle the image
-        const b64 = Buffer.from(product.productImage.img.data).toString('base64');
-        const mimeType = 'image/' + product.productImage.img.contentType; // e.g., image/png
+        // If invalid ID is submitted
+        if (product === null){
+            //console.log('Invalid ID submitted')
+            res.render('error.ejs')
+        }
+        // Valid
+        else{
+            // Handle the image
+            const b64 = Buffer.from(product.productImage.img.data).toString('base64');
+            const mimeType = 'image/' + product.productImage.img.contentType; // e.g., image/png
 
-        // Send the information
-        resObj.productId = product._id;
-        resObj.productName = product.productName;
-        resObj.productDescription = product.description;
-        resObj.productPrice = product.price;
-        resObj.productStock = product.stockQuantity;
-        resObj.productSold = product.sold;
-        resObj.productCategory = product.category;
-        resObj.mimeType = mimeType;
-        resObj.base64 = b64;
-        
-        res.render('productDetail.ejs', resObj);
+            // Send the information
+            resObj.productId = product._id;
+            resObj.productName = product.productName;
+            resObj.productDescription = product.description;
+            resObj.productPrice = product.price;
+            resObj.productStock = product.stockQuantity;
+            resObj.productSold = product.sold;
+            resObj.productCategory = product.category;
+            resObj.mimeType = mimeType;
+            resObj.base64 = b64;
+            
+            res.render('productDetail.ejs', resObj);    
+        }
+    }
 }
 
 // POST

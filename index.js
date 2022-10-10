@@ -123,6 +123,7 @@ app.use('/admin', adminRouter);
 
 
 // Test route = For testing purpose only
+/*
 const Product = require('./models/product');
 
 
@@ -136,6 +137,7 @@ app.get("/test", function(req, res, next) {
         res.send(`<img src="data:${mimeType};base64,${b64}" />`);
     });
 })
+*/
 
 
 
