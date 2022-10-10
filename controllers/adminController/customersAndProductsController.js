@@ -43,10 +43,15 @@ const customersAndProductsView = async (req, res) => {
 // Ajax GET product detail
 const productDetailView = async (req, res) => {
     // Query exclude productImage field
-    const product = await Product.findById(req.query.id).select('-productImage').catch(e => {
+    const product = await Product.findById(req.query.id).catch(e => {
         console.log('Something went wrong');
     });
-    res.send(product);
+
+    // Handle the image
+    const b64 = Buffer.from(product.productImage.img.data).toString('base64');
+    const mimeType = 'image/' + product.productImage.img.contentType; // e.g., image/png
+
+    res.send({product: product, b64: b64, mimeType: mimeType});
 }
 
 // Ajax GET user detail

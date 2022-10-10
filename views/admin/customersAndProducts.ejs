@@ -129,15 +129,23 @@
                     if (this.readyState == 4 && this.status == 200) {
                     // Action to be performed when the response is ready:
                         const res = JSON.parse(xhttp.responseText);
+                        
+                        // Infomation display
                         var view = document.getElementById('detail-view-product');
                         var myInput = document.getElementById('remove-product');
                         myInput.value = id;
                         view.innerHTML = "";
-                        for (var key in res) {
+                        for (var key in res.product) {
                             var li = document.createElement("li");
-                            li.appendChild(document.createTextNode(key + ": " + res[key]));
+                            li.appendChild(document.createTextNode(key + ": " + res.product[key]));
                             view.appendChild(li);
                         }
+                        // For image display
+                        var img = document.createElement("img");
+                        img.src='data:'+res.mimeType+';base64,'+res.b64;
+                        img.height=80;
+                        img.width=80;
+                        view.appendChild(img);
                     }
                     else{
                         //console.log("Something went wrong");
