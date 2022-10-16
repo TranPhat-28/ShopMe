@@ -54,7 +54,8 @@ const postRegister = async (req, res) => {
                         .then(() => {
                             // Create corresponding cart
                             const newCart = new Cart({
-                                email: email
+                                email: email,
+                                total: 0
                             })
                             newCart.save()
                             .then(() => {

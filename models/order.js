@@ -14,7 +14,7 @@ const imageSchema = new mongoose.Schema({
 });
 
 // Schema for storing product
-const cartItemSchema = new mongoose.Schema({
+const orderItemSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -27,8 +27,8 @@ const cartItemSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    reference: {
-        type: mongoose.SchemaTypes.ObjectId,
+    totalPrice: {
+        type: Number,
         required: true,
     },
     productImage: {
@@ -38,17 +38,28 @@ const cartItemSchema = new mongoose.Schema({
 });
 
 // Define the data schema
-const cartSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true
     },
-    itemList: [ cartItemSchema ],
-    total: {
+    //itemList: {
+    //    type: [ orderItemSchema ],
+    //    required: true
+    //},
+    totalCost: {
         type: Number,
+        required: true
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now()
+    },
+    status: {
+        type: String,
         required: true
     }
 });
 
-const Cart = mongoose.model('cart', cartSchema);
-module.exports = Cart;
+const Order = mongoose.model('order', orderSchema);
+module.exports = Order;

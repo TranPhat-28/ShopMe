@@ -1,4 +1,6 @@
 const Cart = require('../models/cart');
+const Product = require('../models/product')
+const Order = require('../models/order')
 
 // Render view
 const confirmOrder = async (req, res) => {
@@ -30,7 +32,8 @@ const confirmOrder = async (req, res) => {
         });
     })
     
-    resObj.total = req.body.total
+    resObj.total = myCart.total
+
     if (req.body.voucher !== ''){
         resObj.voucher = req.body.voucher
     }
@@ -41,4 +44,54 @@ const confirmOrder = async (req, res) => {
     res.render('confirmOrder.ejs', resObj)
 }
 
-module.exports = confirmOrder;
+// Validate the amount of product in stock before placing order
+// If valid, proceed to place order
+const checkOrder = async (req, res) => {
+    // User information
+    const resObj = {};
+    resObj.role = req.user.role;
+    resObj.email = req.user.email;
+    const itemList = [];
+    
+
+    // Query the corresponding cart
+    // And get all item information
+    await Cart.findOne({ email: req.user.email })
+    .then(myCart => {
+        myCart.itemList.forEach( item => {
+            itemList.push({
+                'Name': item.name,
+                'OrderNumber' : item.quantity,
+                'ReferenceID' : item.reference
+            })
+        })
+    })
+    .catch(err => {
+        console.log(err.message);
+    });
+
+
+    // Perform check
+    var i = 0
+    var invalidItem = ''
+    for (i; i < itemList.length; i++){
+        let product = await Product.findById(itemList[i].ReferenceID).select('stockQuantity').catch(e => { console.log(e.message) })
+        if (product.stockQuantity < itemList[i].OrderNumber){ 
+            invalidItem = itemList[i].Name
+            break 
+        }
+    }
+
+    if (i < itemList.length){
+        console.log('Invalid item: ' + invalidItem)
+        res.send('<script>window.alert("Product ' + invalidItem + ' is lower in stock than in your order. Please check your cart");window.location.href="/cart"</script>')
+    }
+    else{
+        console.log('OK')
+    }
+}
+
+module.exports = {
+    confirmOrder,
+    checkOrder
+}

@@ -56,10 +56,15 @@
                 </ul>
             </div>
 
-            <p class="mt-4" style="font-weight: bold;">Total: <%= total %> </p>
+            <p class="mt-4" style="font-weight: bold;">Total: <%= total %> VND</p>
             <p style="font-weight: bold;">Voucher: <%= voucher %> </p>
             <p style="font-weight: bold;">Discount: </p>
-            <p style="font-weight: bold;">Final: </p>
+            <p style="font-weight: bold;">Final: <%= total %> VND</p>
+
+            <form method="post" action="/checkAndPlaceOrder">
+                <button type="submit" class="btn btn-primary">Place order</button>
+            </form>
+            
         </div>
 
         

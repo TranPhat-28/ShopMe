@@ -45,27 +45,25 @@ const cartView = async (req, res) => {
         })
     
         resObj.itemList = resList;
+        resObj.total = myCart.total;
         res.render('cart.ejs', resObj);
     }
     else{
-        // Some products have been removed, perform update cart
-        myCart.itemList.forEach(async item => {
-            // Check for item
-            let result = await Product.exists({ _id: myCart.itemList[i].reference });
-            // If invalid item
-            if (result === null) {
-                Cart.updateOne({ email: req.user.email }, { $pull: {itemList: {_id: myCart.itemList[i]._id}}}, (err, updated) => {
-                    if (err) {
-                        console.log(err.message)
-                    }
-                    else{
-                        //
-                    }
-                })
+        // Product[i] have been removed, perform update cart
+        let invalid = myCart.itemList[i]._id
+        let tmpPrice = myCart.itemList[i].price
+        let tmpQuantity = myCart.itemList[i].quantity
+        let tmpCost = tmpPrice * tmpQuantity
+        
+        
+        Cart.updateOne({ email: req.user.email }, { $pull: {itemList: {_id: invalid}}, $inc: {total: -tmpCost}}, (err, updated) => {
+            if (err) {
+                console.log(err.message)
+            }
+            else{
+                res.send('<script>window.alert("Some product(s) in your cart has been removed by admin. Your cart will be updated automatically"); window.location.href="/cart"</script>')
             }
         })
-        // Send notification to user
-        res.send('<script>window.alert("Some product(s) in your cart has been removed by admin. Your cart will be updated automatically"); window.location.href="/cart"</script>')
     }
 }
 
@@ -97,9 +95,11 @@ const postAddToCart = async (req, res) => {
                     reference: product._id,
                     productImage: product.productImage
                 };
+                // New cost to update to cart
+                var cost = product.price * orderQuantity
 
                 // Input valid, add to cart
-                Cart.findOneAndUpdate({email: email}, { $push: {itemList: newItem}}, (err, updated) => {
+                Cart.findOneAndUpdate({email: email}, { $push: {itemList: newItem}, $inc: {total: cost}}, (err, updated) => {
                     if (err) {
                         console.log(err.message);
                     }
@@ -113,17 +113,23 @@ const postAddToCart = async (req, res) => {
 }
 
 // POST Handling remove from cart
-const postRemoveFromCart = (req, res) => {
+const postRemoveFromCart = async (req, res) => {
     const productId = req.body.productId;
     const email = req.user.email;
     
-    
-    Cart.updateOne({ email: email }, { $pull: {itemList: {_id: productId}}}, (err, updated) => {
-        if (err) {
-            console.log(err.message)
-        }
-        else{
-            res.send('Success')
+    const myCart = await Cart.findOne({email: email}).catch(e => { console.log(e.message)})
+    myCart.itemList.forEach(item => {
+        if (item._id == productId) {
+            let cost = item.price * item.quantity
+            
+            Cart.updateOne({ email: email }, { $pull: {itemList: {_id: productId}}, $inc: {total: -cost}}, (err, updated) => {
+                if (err) {
+                    console.log(err.message)
+                }
+                else{
+                    res.send('Success')
+                }
+            })
         }
     })
 }
