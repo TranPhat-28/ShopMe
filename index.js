@@ -104,6 +104,9 @@ app.use('/', reportRouter);
 // Search route
 const searchRouter = require('./routes/searchRoute');
 app.use('/', searchRouter);
+// My orders route
+const myOrdersRouter = require('./routes/myOrdersRoute')
+app.use('/', myOrdersRouter)
 
 
 /////////////////////////////

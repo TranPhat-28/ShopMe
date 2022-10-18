@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ShopMe</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="css/orderDetail.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+    <body>
+        <!--Header - Navbar-->
+        <!--ADMIN-->
+        <% if ( role === 'admin'){  %>
+            <script>window.location.href='/admin';</script>
+        <% }else if (role !== null){ %> 
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg py-3">
+            <div class="container">
+                <a class="navbar-brand" href="#">ShopMe</a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-2 px-2">
+                        <a class="nav-link" aria-current="page" href="/myOrders">Go back</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--NOT LOGGED IN-->
+        <% }else{  %>
+            <script>window.alert('Please login first');window.location.href='/login';</script>
+        <% } %> 
+
+        <!--Body outermost container-->
+        <div class="container h-100 pt-4 pb-4" style="background-color: white;">
+            <!--Form-->
+            <h3 style="font-weight: bold">Order <%= _id %> </h3>
+            <p class="mb-1 ps-3">User: <%= email %> </p>
+            <p class="mb-1 ps-3">Total: <%= totalCost %> VND</p>
+            <% if (status === 'pending'){ %> 
+            <p class="mb-1 ps-3" style="color: red;">Status: <%= status %> </p>
+            <% } else if (status === 'confirmed'){ %>
+            <p class="mb-1 ps-3" style="color: green;">Status: <%= status %> </p>
+            <% } %> 
+            <p class="mb-1 ps-3">Date ordered: <%= dateCreated %> </p>
+            <br>
+
+            <ul class="list-group w-100 list-container">
+                <% for (let i = 0; i < itemList.length; i++){ %> 
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="container col-4 col-lg-6 d-flex align-items-center">
+                                <img id="product-image" class="img-fluid" 
+                                src='data:<%=itemList[i].mimeType%>;base64,<%=itemList[i].b64%>' alt="Product">
+                            </div>
+                            <div class="container col-8 col-lg-3 d-flex flex-column">
+                                <h5 class="m-1"><%= itemList[i].name %></h5>
+                                <p class="ps-3 m-1 text-secondary">Price: <%= itemList[i].price %> VND</p>
+                                <p class="ps-3 m-1 text-secondary">Quantity: <%= itemList[i].quantity %></p>
+                                <p class="m-1" style="font-weight: bold;">Total: <% itemList[i].total %> VND</p> 
+                            </div>
+                        </div>
+                    </li>
+                <% } %> 
+                </ul>
+        </div>
+
+
+        <!--JAVASCRIPT-->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+            integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+            crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </body>
+</html>

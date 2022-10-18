@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', cursive;
+    background-color: rgb(206, 230, 251);
+}
+
+#search{
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#search-btn{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.navbar-brand{
+    font-family: 'Titan One', cursive;
+}
+
+.orderListContainer{
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
+.order-item{
+    transition-duration: .2s;
+    cursor: pointer;
+}
+
+.order-item:hover{
+    background-color: rgb(230, 230, 230);
+}

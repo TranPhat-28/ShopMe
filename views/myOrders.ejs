@@ -9,9 +9,8 @@
             rel="stylesheet"
             integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
             crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/myOrders.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <link rel="stylesheet" href="/css/search.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body>
         <!--Header - Navbar-->
@@ -89,73 +88,34 @@
         </nav>
 
         <!--Body outermost container-->
-        <div class="container pb-5" style="background-color: white;">
-            <button class="btn btn-outline-secondary m-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Show filter
-            </button>
-              
-            <!--Filter section-->
-            <div class="collapse p-3 border" id="collapseExample">
-                <label for="price" class="form-label m-1">Price range</label><br>
+        <div class="container h-100 pt-4 pb-4" style="background-color: white;">
+            <h3>Your orders: </h3>
+            <p class="text-secondary ps-3">Click to view detail</p>
 
-                <label class="form-label ms-4">From: </label>
-                <input type="number" name="min" class="form-control w-25 d-inline">
-                <label class="form-label ms-4">To: </label>
-                <input type="number" name="max" class="form-control w-25 d-inline">
-                <br>
-
-                <label for="category" class="form-label m-1">Category</label><br>
-                <select name="category" class="form-control" required>
-                    <option value="Empty"></option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Healthcares">Healthcares</option>
-                    <option value="Tools">Tools</option>
-                    <option value="Lifestyles">Lifestyles</option>
-                    <option value="Clothings">Clothings</option>
-                    <option value="Accessories">Accessories</option>
-                    <option value="Cosmetics">Cosmetics</option>
-                    <option value="Shoes">Shoes</option>
-                </select>
-
-                <button class="btn btn-outline-primary mt-3" onclick="filter()">Apply filter</button>
+            <br>
+            <h5>Pending orders: <%= pendingListId.length %></h5>
+            <div class="container p-0 orderListContainer">
+                <ul class="list-group w-100">
+                    <% pendingListId.forEach(item => { %> 
+                    <li class="list-group-item order-item" id="<%= item %> " onclick="getDetail(this.id)">
+                        OrderId <%= item %> 
+                    </li>
+                    <% }) %> 
+                </ul>
             </div>
 
-
-            <!--Did not input any product name to search-->
-            <% if (validName == 'NO'){ %> 
-            <div class="container d-flex flex-column align-items-center" style="width: fit-content;">
-                <img src="/media/search.png" id="empty" alt="Empty">
-                <h4 class="text-center">Please input a name to the search bar to search for product</h4>
+            <br>
+            <h5>Confirmed orders: <%= confirmedListId.length %> </h5>
+            <div class="container p-0 orderListContainer">
+                <ul class="list-group w-100">
+                    <% confirmedListId.forEach(item => { %> 
+                    <li class="list-group-item order-item" id="<%= item %> " onclick="getDetail(this.id)">
+                        OrderId <%= item %> 
+                    </li>
+                    <% }) %> 
+                </ul>
             </div>
-            <% }else{ %> 
-
-            <!--Search results-->        
-            <!--The list container-->
-            <h3 class="py-4">Showing 10 results per page...</h3>
-            <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
-                <% for (let i = 0; i < result.length; i++ ) { %>
-                <!--Card-->
-                <div class="card-container m-2" id="<%= result[i].productId %>" onclick="viewDetail(this)">
-                    <div class="card p-2 shadow">
-                        <img class="card-img-top" src='data:<%=result[i].mimeType%>;base64,<%=result[i].base64%>' alt="ProductIMG" />
-                        <div class="card-body">
-                            <h5 class="card-title"> <%= result[i].productPrice %> VND</h5>
-                            <p class="card-text"> <%= result[i].productName %></p>
-                        </div>
-                        <!--Overlay-->
-                        <div class="overlay">
-                            <span class="overlay-text">View details</span>
-                        </div>
-                    </div>
-                </div>
-                <% } %>
-            </div>
-
-            <% } %> 
         </div>
-
-     
-        
 
         <!--JAVASCRIPT-->
         <script
@@ -167,38 +127,8 @@
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
         <script>
-            function filter(){
-                let URLfilter = ''
-
-                var url = new URL(window.location.href);
-                var c = url.searchParams.get("name");
-
-                let varA = $('input[name=min]').val()
-                let varB = $('input[name=max]').val()
-                let varC = $('select[name=category]').val()
-
-                if( varA !== '' ){
-                    URLfilter += '&min=';
-                    URLfilter += varA;
-                }
-                if( varB !== '' ){
-                    URLfilter += '&max=';
-                    URLfilter += varB;
-                }
-                if( varC !== 'Empty' ){
-                    URLfilter += '&category=';
-                    URLfilter += varC;
-                }
-
-                //console.log('?name=' + c + URLfilter);
-                window.location.href = '?name=' + c + URLfilter
-            }
-
-
-        
-            function viewDetail(obj) {
-                //window.alert(obj.id);
-                window.location.href = '/productDetail?id=' + obj.id;
+            function getDetail(id){
+                window.location.href=('/orderDetail?id=' + id)
             }
         </script>
     </body>
