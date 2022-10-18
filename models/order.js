@@ -31,6 +31,10 @@ const orderItemSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    reference: {
+        type: String,
+        required: true
+    },
     productImage: {
         type: imageSchema,
         required: true
@@ -43,10 +47,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    //itemList: {
-    //    type: [ orderItemSchema ],
-    //    required: true
-    //},
+    itemList: {
+        type: [ orderItemSchema ],
+        required: true
+    },
     totalCost: {
         type: Number,
         required: true
