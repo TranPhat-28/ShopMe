@@ -41,14 +41,24 @@
                     <div class="col-sm-12 col-md-8 p-3">
                         <div class="container border rounded p-3">
                             <!--All pending orders listed here-->
-                            <h5>Pending orders:</h5>
+                            <h5>Pending orders: <%= pendingCount %></h5>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
-                                <li class="list-group-item">Order A</li> 
+                                <% for (let i = 0; i < pendingCount; i++) { %> 
+                                <li class="list-group-item" onclick="getOrderDetail(this.id)" id="<%=pendingOrders[i]%>" >Order: <%= pendingOrders[i] %></li> 
+                                <% } %> 
                             </ul>
+                            
                             <!--All confirmed orders listed here-->
-                            <h5 class="mt-3">Confirmed orders:</h5>
+                            <h5 class="mt-3">Confirmed orders: <%= confirmedCount %></h5>
                             <ul class="list-group" style="max-height: 210px; overflow-y: scroll">
-                                <li class="list-group-item">Order A</li> 
+                                <% for (let i = 0; i < confirmedCount; i++) { %> 
+                                <li class="list-group-item" onclick="getOrderDetail(this.id)" id="<%=confirmedOrders[i]%>">Order: <%= confirmedOrders[i] %></li> 
+                                <% } %> 
+                            </ul>
+
+                            <!--Detail view for Order-->
+                            <h5 class="mt-3">Order detail: </h5>
+                            <ul class="container w-100 border rounded pt-2" id="detail-view-order" style="height: 400px">
                             </ul>
                         </div>
                     </div>
@@ -92,5 +102,43 @@
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
+        <script>
+            function getOrderDetail(id){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    // Action to be performed when the response is ready:
+                        //const res = JSON.parse(xhttp.responseText);
+                        const res = xhttp.responseText;
+                        
+                        // Infomation display
+                        /*
+                        var view = document.getElementById('detail-view-product');
+                        var myInput = document.getElementById('remove-product');
+                        myInput.value = id;
+                        view.innerHTML = "";
+                        for (var key in res.product) {
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(key + ": " + res.product[key]));
+                            view.appendChild(li);
+                        }
+                        // For image display
+                        var img = document.createElement("img");
+                        img.src='data:'+res.mimeType+';base64,'+res.b64;
+                        img.height=80;
+                        img.width=80;
+                        view.appendChild(img);
+                        */
+                        console.log(res)
+                    }
+                    else{
+                        console.log("Something went wrong");
+                    }
+                };
+                //(method, url, async)
+                xhttp.open("GET", "/admin/ordersDetail?id=" + id, true);
+                xhttp.send();
+            }
+        </script>
     </body>
 </html>
