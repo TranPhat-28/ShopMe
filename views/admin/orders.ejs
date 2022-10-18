@@ -58,8 +58,13 @@
 
                             <!--Detail view for Order-->
                             <h5 class="mt-3">Order detail: </h5>
-                            <ul class="container w-100 border rounded pt-2" id="detail-view-order" style="height: 400px">
+                            <ul class="container w-100 border rounded pt-2 ps-5" id="detail-view-order" style="height: 400px; overflow-y: scroll;">
                             </ul>
+
+                            <form method="post" action="/admin/orders">
+                                <input type="hidden" name="orderID" id="inputOrderID">
+                                <button class="btn btn-primary mt-3">Confirm order</button>
+                            </form>
                         </div>
                     </div>
         
@@ -108,28 +113,70 @@
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                     // Action to be performed when the response is ready:
-                        //const res = JSON.parse(xhttp.responseText);
-                        const res = xhttp.responseText;
+                        const res = JSON.parse(xhttp.responseText);
+                        //const res = xhttp.responseText;
                         
                         // Infomation display
-                        /*
-                        var view = document.getElementById('detail-view-product');
-                        var myInput = document.getElementById('remove-product');
-                        myInput.value = id;
+                        var view = document.getElementById('detail-view-order');
                         view.innerHTML = "";
-                        for (var key in res.product) {
-                            var li = document.createElement("li");
-                            li.appendChild(document.createTextNode(key + ": " + res.product[key]));
-                            view.appendChild(li);
-                        }
-                        // For image display
-                        var img = document.createElement("img");
-                        img.src='data:'+res.mimeType+';base64,'+res.b64;
-                        img.height=80;
-                        img.width=80;
-                        view.appendChild(img);
-                        */
-                        console.log(res)
+
+
+                    
+                        // Set orderID for input 
+                        const inputOrderId = document.getElementById('inputOrderID');
+                        inputOrderId.value = res['_id'];
+                        // Child node
+                        var childNode = document.createElement("li");
+
+
+                        // Order ID
+                        const orderId = document.createTextNode("OrderID: " + res['_id']); 
+                        childNode.appendChild(orderId)
+                        view.appendChild(childNode);
+                        // User
+                        childNode = document.createElement("li");
+                        const name = document.createTextNode("User: " + res['email']); 
+                        childNode.appendChild(name)
+                        view.appendChild(childNode);
+                        // Date created
+                        childNode = document.createElement("li");
+                        const date = document.createTextNode("Date ordered: " + res['dateCreated']); 
+                        childNode.appendChild(date)
+                        view.appendChild(childNode);
+                        // Status
+                        childNode = document.createElement("li");
+                        const status = document.createTextNode("Status: " + res['status']); 
+                        childNode.appendChild(status)
+                        view.appendChild(childNode);
+                        // Total
+                        childNode = document.createElement("li");
+                        const total = document.createTextNode("Total: " + res['totalCost'] + ' VND'); 
+                        childNode.appendChild(total)
+                        view.appendChild(childNode);
+                        // List of Item:
+                        childNode = document.createElement("li");
+                        const list = document.createTextNode("List of items: "); 
+                        childNode.appendChild(list)
+                        view.appendChild(childNode);
+
+                        const listChildNode = document.createElement("ol");
+                        view.appendChild(listChildNode);
+
+                        res['itemList'].forEach(element => {
+                            var OLchildNode = document.createElement("li");
+                            const listItemName = document.createTextNode(element.name); 
+                            const listItemPrice = document.createTextNode('Price: ' + element.price + ' VND');
+                            const listItemQuantity = document.createTextNode('Quantity: ' + element.quantity);
+                            const listItemTotal = document.createTextNode('Total: ' + element.totalPrice + ' VND');
+                            OLchildNode.appendChild(listItemName);
+                            OLchildNode.appendChild(document.createElement("br"));
+                            OLchildNode.appendChild(listItemPrice);
+                            OLchildNode.appendChild(document.createElement("br"));
+                            OLchildNode.appendChild(listItemQuantity);
+                            OLchildNode.appendChild(document.createElement("br"));
+                            OLchildNode.appendChild(listItemTotal);
+                            listChildNode.appendChild(OLchildNode);
+                        });
                     }
                     else{
                         console.log("Something went wrong");

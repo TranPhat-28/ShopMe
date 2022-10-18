@@ -9,7 +9,7 @@ var upload = multer({ storage: storage });
 const adminProtected = require('../auth/adminProtect');
 
 // Import controllers
-const { ordersView, orderDetailView } = require('../controllers/adminController/ordersController');
+const { ordersView, orderDetailView, postOrder } = require('../controllers/adminController/ordersController');
 const { customersAndProductsView, productDetailView, postCustomersAndProducts, userDetailView } = require('../controllers/adminController/customersAndProductsController');
 const { addProductView, postAddProduct } = require('../controllers/adminController/addProductController');
 const { userReportView, postUserReport, reportDetailView } = require('../controllers/adminController/userReport');
@@ -27,6 +27,8 @@ const { editProductView, searchEditName, searchEditID, postEditProduct } = requi
 // GET orders
 router.get('/orders', adminProtected, ordersView);
 router.get('/ordersDetail', adminProtected, orderDetailView);
+// POST - confirming orders
+router.post('/orders', adminProtected, postOrder);
 
 
 
