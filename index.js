@@ -107,6 +107,9 @@ app.use('/', searchRouter);
 // My orders route
 const myOrdersRouter = require('./routes/myOrdersRoute')
 app.use('/', myOrdersRouter)
+// Voucher route
+const voucherRouter = require('./routes/voucherRoute.js')
+app.use('/', voucherRouter)
 
 
 /////////////////////////////

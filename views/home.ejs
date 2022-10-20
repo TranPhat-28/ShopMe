@@ -210,7 +210,7 @@
 
             <!--Carousel section for voucher-->
             <p class="responsive-title">Get your voucher now</p>
-            <div class="voucher container mt-2">
+            <div class="voucher container mt-2" onclick="voucher()">
                 <img src="/media/voucher.jpg" class="img-fluid rounded" alt="Get voucher">
                 <!--Overlay-->
                 <div class="overlay">
@@ -244,6 +244,10 @@
 
             function filterCategory(id){
                 window.location.href = '/search?cateOnly=' + id;
+            }
+
+            function voucher(){
+                window.location.href='/voucher'
             }
         </script>
     </body>
