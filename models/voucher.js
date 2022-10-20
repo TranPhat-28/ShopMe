@@ -6,7 +6,7 @@ const VoucherSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    expirationDay: {
+    expirationDate: {
         type: Date,
         required: true
     },
