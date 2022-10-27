@@ -27,7 +27,11 @@ const searchView = async (req, res) => {
     // If going from category from homepage:
     if (cateOnly){
         resObj.validName = 'YES'
-        let resultPromise = await Product.find({category: cateOnly}).catch(e => {
+        // Page number
+        const page = req.query.page
+
+        // Show 10 per page
+        let resultPromise = await Product.find({category: cateOnly}).skip((page - 1) * 10).limit(10).catch(e => {
             console.log(e.message)
         })
 
@@ -79,10 +83,12 @@ const searchView = async (req, res) => {
         if (category) {
             queryObj.category = category
         }
+        // Page number
+        const page = req.query.page
         
 
-
-        let resultPromise = await Product.find(queryObj).catch(e => {
+        // Show 10 per page
+        let resultPromise = await Product.find(queryObj).skip((page - 1) * 10).limit(10).catch(e => {
             console.log(e.message)
         })
 

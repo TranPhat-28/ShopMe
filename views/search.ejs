@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="/css/search.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
-    <body>
+    <body onload="setPage()">
         <!--Header - Navbar-->
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg py-3">
             <div class="container">
@@ -132,7 +132,7 @@
             <!--Search results-->        
             <!--The list container-->
             <h3 class="py-4">Showing 10 results per page...</h3>
-            <div id="new-arrivals-container" class="container d-flex flex-row pb-4">
+            <div id="new-arrivals-container" class="container d-flex flex-row p-0 flex-wrap">
                 <% for (let i = 0; i < result.length; i++ ) { %>
                 <!--Card-->
                 <div class="card-container m-2" id="<%= result[i].productId %>" onclick="viewDetail(this)">
@@ -151,6 +151,12 @@
                 <% } %>
             </div>
 
+            <!--Button-->
+            <div class="container d-flex align-items-center justify-content-center">
+                <button class="btn btn-outline-primary m-3" onclick="prevPage()">Prev</button>
+                <span id="pageNumber">1</span>
+                <button class="btn btn-outline-primary m-3" onclick="nextPage()">Next</button>
+            </div>
             <% } %> 
         </div>
 
@@ -199,6 +205,27 @@
             function viewDetail(obj) {
                 //window.alert(obj.id);
                 window.location.href = '/productDetail?id=' + obj.id;
+            }
+
+            function nextPage(){
+                var url = new URL(window.location.href);
+                const currentPage = parseInt(url.searchParams.get("page"));
+                url.searchParams.set("page", (currentPage + 1).toString());
+                window.location.href = url
+            }
+
+            function prevPage(){
+                var url = new URL(window.location.href);
+                const currentPage = parseInt(url.searchParams.get("page"));
+                if (currentPage !== 1){
+                    url.searchParams.set("page", (currentPage - 1).toString());
+                    window.location.href = url
+                }
+            }
+
+            function setPage(){
+                var url = new URL(window.location.href);
+                document.getElementById('pageNumber').innerHTML=url.searchParams.get("page");
             }
         </script>
     </body>
