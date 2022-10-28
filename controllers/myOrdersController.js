@@ -19,7 +19,7 @@ const myOrdersView = async (req, res) => {
             pendingListId.push(item._id)
         }
         else if (item.status === 'confirmed'){
-            confirmedListId.push(item._id)
+            confirmedListId.push({ id: item._id, feedback: item.feedbackStatus })
         }
     })
 
@@ -50,10 +50,13 @@ const orderDetailView = async (req, res) => {
     // Item list
     order.itemList.forEach(item => {
         itemList.push({
+            id: item._id,
             name: item.name,
             price: item.price,
             quantity: item.quantity,
-            total: item.total,
+            total: item.totalPrice,
+            reference: item.reference,
+            feedbackStatus: item.feedbackStatus,
             b64: Buffer.from(item.productImage.img.data).toString('base64'),
             mimeType: 'image/' + item.productImage.img.contentType // e.g., image/png
         })

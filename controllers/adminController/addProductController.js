@@ -2,8 +2,8 @@
 const Product = require('../../models/product');
 // Multer and fs for handling file
 const multer = require("multer");
-
-
+// Feedback model
+const Feedback = require('../../models/feedback')
 
 
 
@@ -54,8 +54,15 @@ const postAddProduct = (req, res, next) => {
         
             // Save to the database
             newProduct.save()
-            .then(() => {
-                res.send("<script>alert('Successfully added a new product'); window.location.href='/admin/addProduct'; </script>");
+            .then((product) => {
+                const newFeedback = new Feedback({
+                    reference: product._id,
+                    feedbackList: []
+                })
+
+                newFeedback.save().then(() => {
+                    res.send("<script>alert('Successfully added a new product'); window.location.href='/admin/addProduct'; </script>");
+                })
             })
             
         }

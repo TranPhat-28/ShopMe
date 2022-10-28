@@ -38,3 +38,8 @@ body{
 .order-item:hover{
     background-color: rgb(230, 230, 230);
 }
+
+.leave-feedback{
+    float: right;
+    color: green;
+}

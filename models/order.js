@@ -39,6 +39,10 @@ const orderItemSchema = new mongoose.Schema({
         type: imageSchema,
         required: true
     },
+    feedbackStatus: {
+        type: String,
+        required: true
+    }
 });
 
 // Define the data schema

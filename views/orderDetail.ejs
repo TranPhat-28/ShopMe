@@ -59,14 +59,59 @@
                                 <h5 class="m-1"><%= itemList[i].name %></h5>
                                 <p class="ps-3 m-1 text-secondary">Price: <%= itemList[i].price %> VND</p>
                                 <p class="ps-3 m-1 text-secondary">Quantity: <%= itemList[i].quantity %></p>
-                                <p class="m-1" style="font-weight: bold;">Total: <% itemList[i].total %> VND</p> 
+                                <p class="m-1" style="font-weight: bold;">Total: <%= itemList[i].total %> VND</p> 
                             </div>
                         </div>
+                        
+                        <% if (status !== 'pending' && status === 'confirmed' && itemList[i].feedbackStatus === 'waiting') { %>
+                            <button class="btn btn-outline-primary" name="<%= itemList[i].id %> " onclick="showForm(this)" id="<%= itemList[i].reference %> ">Leave feedback</button>
+                        <% } %> 
                     </li>
                 <% } %> 
-                </ul>
+            </ul>
         </div>
 
+        
+        <% if (status !== 'pending' && status === 'confirmed') { %>
+        <!--Hidden form foe leaving feedback-->
+        <div id="popupForm">
+            <form method="post" action="/postFeedback" class="p-3">
+                <h3 id="h3">Your feedback for product: </h3>
+                
+                <!--Star-->
+                <div id="rating">
+                    
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label class = "full" for="star3" title="Meh - 3 stars"></label>
+                
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                    
+                </div>
+                
+                <!--Textarea-->
+                <textarea class="form-control" name="content" id="content" rows="3" placeholder="What do you think about this product?"></textarea>
+                <br><br>
+
+                <input type="hidden" name="ProductOrderId" id="ProductOrderId"/>
+                <input type="hidden" name="feedbackProductId" id="feedbackProductId"/>
+                <input type="hidden" name="orderId" id="orderId"/>
+
+                <!--Button-->
+                <input type="submit" value="Submit feedback" class="btn btn-primary">
+                <button class="btn btn-secondary" type="button" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+        <% } %> 
 
         <!--JAVASCRIPT-->
         <script
@@ -78,5 +123,20 @@
             integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
             crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            function showForm(tag){
+                var url = new URL(window.location.href);
+                const form = document.getElementById('popupForm')
+                form.style.display='flex'
+                document.getElementById('ProductOrderId').value=tag.name
+                document.getElementById('feedbackProductId').value=tag.id
+                document.getElementById('orderId').value=url.searchParams.get("id");
+            }
+
+            function closeForm(){
+                const form = document.getElementById('popupForm')
+                form.style.display='none'
+            }
+        </script>
     </body>
 </html>

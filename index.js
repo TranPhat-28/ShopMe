@@ -110,7 +110,9 @@ app.use('/', myOrdersRouter)
 // Voucher route
 const voucherRouter = require('./routes/voucherRoute.js')
 app.use('/', voucherRouter)
-
+// Feedback route
+const feedbackRouter = require('./routes/feedbackRoute')
+app.use('/', feedbackRouter)
 
 /////////////////////////////
 // ADMIN ROUTE

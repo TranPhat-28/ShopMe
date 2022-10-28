@@ -109,8 +109,11 @@
             <div class="container p-0 orderListContainer">
                 <ul class="list-group w-100">
                     <% confirmedListId.forEach(item => { %> 
-                    <li class="list-group-item order-item" id="<%= item %> " onclick="getDetail(this.id)">
-                        OrderId <%= item %> 
+                    <li class="list-group-item order-item" id="<%= item.id %> " onclick="getDetail(this.id)">
+                        OrderId <%= item.id %>
+                        <% if (item.feedback === 'available') { %>
+                            <span class="leave-feedback">Leave feedback now!</span>
+                        <% } %>   
                     </li>
                     <% }) %> 
                 </ul>

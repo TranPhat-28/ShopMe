@@ -99,7 +99,8 @@ const checkOrder = async (req, res) => {
                 productImage: {
                     name: item.productImage.name,
                     img: item.productImage.img
-                }
+                },
+                feedbackStatus: 'waiting'
             })
 
             // Decrease the amount of product ordered
@@ -111,7 +112,7 @@ const checkOrder = async (req, res) => {
             email: req.user.email,
             itemList: newList,
             totalCost: totalCost,
-            status: 'pending'
+            status: 'pending',
         })
 
         newOrder.save()
