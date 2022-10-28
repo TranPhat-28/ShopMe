@@ -37,4 +37,32 @@ const postFeedback = (req, res) => {
     }
 }
 
-module.exports = postFeedback
+const getFeedback = (req, res) => {
+    const numberPerPage = 3
+
+    const id = req.query.id.trim()
+    const page = parseInt(req.query.page)
+
+    var feedbackArr = []
+
+    //.sort([['date', -1]]).limit(3)
+    Feedback.findOne({ reference: id}).then(feedback => {
+        feedbackArr = feedback.feedbackList.slice((page - 1) * numberPerPage, (page - 1) * numberPerPage + numberPerPage)
+        //console.log('PAGE ' + page)
+        //feedbackArr.forEach(item => {
+        //    console.log(item.feedback)
+        //})
+        if (feedbackArr.length === 0) { 
+            res.send('No feedback')
+        }
+        else{
+            res.send(feedbackArr)
+        }
+    })
+    .catch(e => {console.log(e.message)})
+}
+
+module.exports = {
+    postFeedback,
+    getFeedback
+}

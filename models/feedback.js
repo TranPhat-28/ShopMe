@@ -13,7 +13,11 @@ const feedbackItemSchema = new mongoose.Schema({
     star: {
         type: Number,
         required: true,
-    }
+    },
+    date: {
+        type: Date,
+        default: Date.now()
+    },
 });
 
 // Schema for product's feedbacks

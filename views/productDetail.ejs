@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="/css/productDetail.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
-    <body>
+    <body onload="loadFeedback(1)">
         <!--Header - Navbar-->
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg py-3">
             <div class="container">
@@ -133,11 +133,60 @@
             <!--Row below for comment-->
             <div class="container mt-3 mt-md-5">
                 <h4>Feedbacks</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">This is a feedbacks</li>
-                    <li class="list-group-item">This is a feedbacks</li>
-                    <li class="list-group-item">This is a feedbacks</li>
-                  </ul>
+                <ul class="list-group" id="feedbackList">
+                    <li class="list-group-item" id="noFeedback">No feedback</li>
+                    <li class="list-group-item" id="feedback0">
+                        <div id="rating0">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+
+                        <span id="date0"></span>
+                        <span>by</span>
+                        <span id="user0" style="font-weight: bold;"></span><br>
+                        <span id="content0"></span>
+                    </li>
+
+                    <li class="list-group-item" id="feedback1">
+                        <div id="rating1">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+
+                        <span id="date1"></span>
+                        <span>by</span>
+                        <span id="user1" style="font-weight: bold"></span><br>
+                        <span id="content1"></span>
+                    </li>
+
+                    <li class="list-group-item" id="feedback2">
+                        <div id="rating2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+
+                        <span id="date2"></span>
+                        <span>by</span>
+                        <span id="user2" style="font-weight: bold;"></span><br>
+                        <span id="content2"></span>
+                    </li>
+                </ul>
+                
+                <!--Button-->
+                <div class="container d-flex align-items-center justify-content-center">
+                    <button class="btn btn-outline-primary m-3" onclick="prevPage()">Prev</button>
+                    <span id="pageNumber">1</span>
+                    <button class="btn btn-outline-primary m-3" onclick="nextPage()">Next</button>
+                </div>
             </div>
         </div>
 
@@ -214,6 +263,89 @@
                         console.log('Failed info :' + data);
                     }
                 });
+            }
+
+            function loadFeedback(page){
+                var urlParams = new URLSearchParams(window.location.search);
+                const container = document.getElementById('feedbackList')
+                var id = urlParams.get('id')
+
+                $.ajax({
+                    url: '/getFeedback?id=' + id + '&page=' + page,
+                    method: 'GET',
+                    success: function(data) {
+                        // SUCCESS
+                        //console.log(data)
+                        if (data === 'No feedback'){
+                            // No feedback
+                            $("#noFeedback").css("display", "block");
+                            $("#feedback0").css("display", "none");
+                            $("#feedback1").css("display", "none");
+                            $("#feedback2").css("display", "none");
+                        }else{
+                            // Reset color
+                            $(".fa-star").css("color", "#c9c9c9");
+                            // Yes
+                            $("#noFeedback").css("display", "none");
+                            $("#feedback0").css("display", "none");
+                            $("#feedback1").css("display", "none");
+                            $("#feedback2").css("display", "none");
+
+                            // 1st
+                            if (data[0]){
+                                $("#feedback0").css("display", "block");
+                                $("#date0").text(data[0].date)
+                                $("#user0").text(data[0].user)
+                                $("#content0").text(data[0].feedback)
+
+                                let rating0 = $("#rating0").children("i").slice(0, data[0].star);
+                                rating0.css("color", "#fcd303")
+                            }
+                            // 2nd
+                            if (data[1]){
+                                $("#feedback1").css("display", "block");
+                                $("#date1").text(data[1].date)
+                                $("#user1").text(data[1].user)
+                                $("#content1").text(data[1].feedback)
+
+                                let rating1 = $("#rating1").children("i").slice(0, data[1].star);
+                                rating1.css("color", "#fcd303")
+                            }
+                            // 3rd
+                            if (data[2]){
+                                $("#feedback2").css("display", "block");
+                                $("#date2").text(data[2].date)
+                                $("#user2").text(data[2].user)
+                                $("#content2").text(data[2].feedback)
+
+                                let rating2 = $("#rating2").children("i").slice(0, data[2].star);
+                                rating2.css("color", "#fcd303")
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        // FAILED
+                        console.log('Failed: ' + data)
+                    }
+                });
+            }
+
+            function prevPage(){
+                const current = parseInt(document.getElementById('pageNumber').innerHTML)
+                if (current > 1){
+                    const prev = current - 1
+                    document.getElementById('pageNumber').innerHTML = prev
+
+                    loadFeedback(prev)
+                }
+            }
+
+            function nextPage(){
+                const current = parseInt(document.getElementById('pageNumber').innerHTML)
+                const next = current + 1
+                document.getElementById('pageNumber').innerHTML = next
+
+                loadFeedback(next)
             }
         </script>
     </body>
