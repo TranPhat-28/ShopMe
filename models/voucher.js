@@ -8,7 +8,6 @@ const VoucherSchema = new mongoose.Schema({
     },
     expirationDate: {
         type: Date,
-        required: true
     },
     discountPercent: {
         type: Number,

@@ -62,6 +62,7 @@
             <p style="font-weight: bold;">Final: <%= total %> VND</p>
 
             <form method="post" action="/checkAndPlaceOrder">
+                <input type="hidden" name="voucher" value=<%= voucher %> > 
                 <button type="submit" class="btn btn-primary">Place order</button>
             </form>
             

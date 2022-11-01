@@ -1,6 +1,7 @@
 const Cart = require('../models/cart');
 const Product = require('../models/product')
 const Order = require('../models/order')
+const Voucher = require('../models/voucher')
 
 // Render view
 const confirmOrder = async (req, res) => {
@@ -53,8 +54,9 @@ const checkOrder = async (req, res) => {
     resObj.email = req.user.email;
     const itemList = [];
     var totalCost = 0;
-    
+    const voucher = req.body.voucher;
 
+    
     // Query the corresponding cart
     // And get all item information
     await Cart.findOne({ email: req.user.email })
@@ -69,7 +71,18 @@ const checkOrder = async (req, res) => {
         console.log(err.message);
     });
 
+    
+    // Voucher check
+    /*
+    try {
+        const voucherStatus = await Voucher.findOne({})
+    } catch (error) {
+        console.error(error)
+    }
 
+
+    
+    /*
     // Perform check
     var i = 0
     var invalidItem = ''
@@ -130,6 +143,8 @@ const checkOrder = async (req, res) => {
             res.send('<script>window.alert("Something went wrong, please try again later");window.location.href="/cart"</script>')
         })
     }
+
+    */
 }
 
 module.exports = {

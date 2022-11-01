@@ -8,16 +8,19 @@ const viewAddVoucher = (req, res) => {
 // POST add new voucher to db
 const addVoucherPost = (req, res) => {
     const voucherCode = req.body.voucherCode
-    const expirationDate = req.body.expirationDate
+    var expirationDate = req.body.expirationDate
     const discountPercent = req.body.discountPercent
+    const noExpire = req.body.noExpire
 
-    if (!voucherCode || !expirationDate || !discountPercent){
+    if (!voucherCode || (!expirationDate && !noExpire) || !discountPercent){
         res.send('<script>window.alert("Missing required field(s)"); window.location.href="/admin/addVoucher"</script>')
     }
     else{
-        //console.log(expirationDate - Date.now())
-        console.log(Date.now())
-        /*
+        // No expiration date
+        if (noExpire === 'on'){
+            expirationDate = null
+        }
+    
         const newVoucher = new Voucher({
             voucherCode: voucherCode,
             expirationDate: expirationDate,
@@ -29,7 +32,6 @@ const addVoucherPost = (req, res) => {
             res.send('<script>window.alert("Successfully added a new voucher"); window.location.href="/admin/viewVoucher"</script>')
         })
         .catch(e => { console.log(e.message) })
-        */
     }
 }
 
