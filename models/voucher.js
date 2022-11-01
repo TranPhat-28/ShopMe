@@ -13,6 +13,14 @@ const VoucherSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    summary: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
     users: {
         type: [ String ],
         required: true

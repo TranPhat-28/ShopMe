@@ -11,8 +11,10 @@ const addVoucherPost = (req, res) => {
     var expirationDate = req.body.expirationDate
     const discountPercent = req.body.discountPercent
     const noExpire = req.body.noExpire
+    const description = req.body.description
+    const summary = req.body.summary
 
-    if (!voucherCode || (!expirationDate && !noExpire) || !discountPercent){
+    if (!voucherCode || (!expirationDate && !noExpire) || !discountPercent || !description || !summary){
         res.send('<script>window.alert("Missing required field(s)"); window.location.href="/admin/addVoucher"</script>')
     }
     else{
@@ -25,6 +27,8 @@ const addVoucherPost = (req, res) => {
             voucherCode: voucherCode,
             expirationDate: expirationDate,
             discountPercent: discountPercent,
+            summary: summary,
+            description: description,
             users: []
         })
 

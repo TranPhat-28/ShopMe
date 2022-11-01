@@ -96,14 +96,14 @@
                     <img src="/media/discount1.jpg" class="img-fluid" alt="Discount" id="discount1">
                 </div>
                 <div class="col-sm-6 p-3">
-                    <h3>Voucher: <span style="font-weight: bold;">WELCOME</span></h3>
+                    <% nonExpires.forEach(element => { %>
+                    <h4>Voucher: <span style="font-weight: bold;"> <%= element.voucherCode %> </span></h4>
                     
                     <details>
-                        <summary style="font-weight: bold">Welcome new user</summary>
-                        This voucher is for new user. Can be apply to any product on the website. Discount 30% to a selected order of user's choice. 
-                        Can be apply once per user only.
-                        Available until: no expire day
+                        <summary style="font-weight: bold"> <%= element.summary %> </summary>
+                        <%= element.description %>
                     </details>
+                    <% }); %> 
                 </div>
             </div>
             <br><br>
@@ -115,14 +115,15 @@
                     <img src="/media/discount2.jpg" class="img-fluid" alt="Discount" id="discount2">
                 </div>
                 <div class="col-sm-6 p-3">
-                    <h4>Limited time voucher: <span style="font-weight: bold;">HAPPYHOLIDAY</span></h4>
-                    
+                    <% expires.forEach(element => { %>
+                    <h4>Voucher: <span style="font-weight: bold;"> <%= element.voucherCode %> </span></h4>
+                        
                     <details>
-                        <summary style="font-weight: bold">Welcome the holiday</summary>
-                        This voucher is applicable for every user. Can be apply to any product on the website. Discount 10% to a selected order of user's choice. 
-                        Can be apply once per user only.
-                        Available until: 31/12/2022
+                        <summary style="font-weight: bold"> <%= element.summary %> </summary>
+                        <%= element.description %>
                     </details>
+                    <br><br>
+                    <% }); %> 
                 </div>
             </div>
         </div>
