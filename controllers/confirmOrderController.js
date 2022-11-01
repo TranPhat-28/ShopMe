@@ -54,7 +54,7 @@ const checkOrder = async (req, res) => {
     resObj.email = req.user.email;
     const itemList = [];
     var totalCost = 0;
-    const voucher = req.body.voucher;
+    var voucher = req.body.voucher;
 
     
     // Query the corresponding cart
@@ -72,15 +72,54 @@ const checkOrder = async (req, res) => {
     });
 
     
-    // Voucher check
-    /*
-    try {
-        const voucherStatus = await Voucher.findOne({})
-    } catch (error) {
-        console.error(error)
+    // Check voucher (if user entered one)
+    if (voucher !== 'None'){
+        try {
+            const voucherStatus = await Voucher.findOne({voucherCode: voucher})
+            if (voucherStatus === null){
+                // Invalid voucher code
+                voucher = null;
+                res.send('<script>window.alert("Invalid voucher");window.location.href="/cart"</script>')
+            }
+            else{
+                // Valid voucher
+                // Check for expiration (if not un-limit time voucher)
+                if (voucherStatus.expirationDate !== null){
+                    // Voucher expire date
+                    const expireDate = new Date(voucherStatus.expirationDate.getFullYear(), voucherStatus.expirationDate.getMonth(), voucherStatus.expirationDate.getDate());
+                    
+                    // Get today
+                    const today = new Date();
+
+                    if (today > expireDate){
+                        // Expired voucher
+                        voucher = null;
+                        res.send('<script>window.alert("Voucher expired!");window.location.href="/cart"</script>')
+                    }
+                    else{
+                        // All good
+                        //console.log('VOUCHER OK');
+                    }
+
+                    // Compare to check
+                    //new Date(parts[2], parts[1] - 1, parts[0]);
+                }
+                // No expire: unlimited time voucher
+                else{
+                    console.log('No expire: unlimited time voucher')
+                }
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }else{
+        //console.log('NO VOUCHER USED')
     }
 
-
+    // ONLY USABLE VOUCHER WILL BE PRINTED OUT
+    if (voucher !== null){
+        console.log(voucher)
+    }
     
     /*
     // Perform check
