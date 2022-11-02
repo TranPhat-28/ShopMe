@@ -55,6 +55,7 @@ const checkOrder = async (req, res) => {
     const itemList = [];
     var totalCost = 0;
     var voucher = req.body.voucher;
+    var discount = null;
 
     
     // Query the corresponding cart
@@ -97,8 +98,20 @@ const checkOrder = async (req, res) => {
                         res.send('<script>window.alert("Voucher expired!");window.location.href="/cart"</script>')
                     }
                     else{
-                        // All good
-                        //console.log('VOUCHER OK');
+                        // Valid voucher
+                        // Check if user already use the voucher
+                        const userCheck = voucherStatus.users;
+                        if (userCheck.includes(req.user.email)){
+                            // User already use this voucher
+                            res.send('<script>window.alert("You have already used this voucher!");window.location.href="/home"</script>')
+                        }
+                        else
+                        {
+                            // All good
+                            // Get discount percentage
+                            discount = voucherStatus.discountPercent;
+                        }
+                        
                     }
 
                     // Compare to check
@@ -107,6 +120,7 @@ const checkOrder = async (req, res) => {
                 // No expire: unlimited time voucher
                 else{
                     console.log('No expire: unlimited time voucher')
+                    discount = voucherStatus.discountPercent;
                 }
             }
         } catch (error) {
@@ -114,76 +128,82 @@ const checkOrder = async (req, res) => {
         }
     }else{
         //console.log('NO VOUCHER USED')
+        discount = 0;
     }
 
     // ONLY USABLE VOUCHER WILL BE PRINTED OUT
     if (voucher !== null){
-        console.log(voucher)
-    }
-    
-    /*
-    // Perform check
-    var i = 0
-    var invalidItem = ''
-    for (i; i < itemList.length; i++){
-        let product = await Product.findById(itemList[i].reference).select('stockQuantity').catch(e => { console.log(e.message) })
-        if (product.stockQuantity < itemList[i].quantity){ 
-            invalidItem = itemList[i].name
-            break 
+        console.log('Discount percent: ' + discount)
+        // HANDLE ORDER HERE
+
+        // Perform check
+        var i = 0
+        var invalidItem = ''
+        for (i; i < itemList.length; i++){
+            let product = await Product.findById(itemList[i].reference).select('stockQuantity').catch(e => { console.log(e.message) })
+            if (product.stockQuantity < itemList[i].quantity){ 
+                invalidItem = itemList[i].name
+                break 
+            }
+        }
+
+        if (i < itemList.length){
+            //console.log('Invalid item: ' + invalidItem)
+            res.send('<script>window.alert("Product ' + invalidItem + ' is lower in stock than in your order. Please check your cart");window.location.href="/cart"</script>')
+        }
+        else{
+            var newList = []
+
+            itemList.forEach(item => {
+                // New list for newOrder query
+                newList.push({
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    totalPrice: (item.quantity * item.price),
+                    reference: item.reference,
+                    productImage: {
+                        name: item.productImage.name,
+                        img: item.productImage.img
+                    },
+                    feedbackStatus: 'waiting'
+                })
+
+                // Decrease the amount of product ordered
+                Product.findOneAndUpdate({_id: item.reference}, { $inc: { stockQuantity: -item.quantity, sold: item.quantity} }).catch(e => {console.log(e.message)})
+            })
+
+            
+            const newOrder = new Order({
+                email: req.user.email,
+                itemList: newList,
+                totalCost: totalCost - (totalCost / 100 * discount),
+                discount: totalCost / 100 * discount,
+                status: 'pending',
+            })
+
+            // Create order
+            newOrder.save()
+            .then(() => {
+                // Keep track of voucher
+                if (voucher !== 'None'){
+                    Voucher.findOneAndUpdate({voucherCode: voucher},  { $push: { users: req.user.email } }).then(() => {
+                        // Empty the cart
+                        Cart.findOneAndUpdate({email: req.user.email}, {itemList: [], total: 0}).catch(e => {
+                            console.log(e.message)
+                        })
+                    }).catch(e => console.log(e.message))
+                }
+
+                //console.log('Order created')
+                res.send('<script>window.alert("Your order has been successfully created");window.location.href="/cart"</script>')
+            })
+            .catch(e => {
+                console.log(e.message)
+                res.send('<script>window.alert("Something went wrong, please try again later");window.location.href="/cart"</script>')
+            })
         }
     }
-
-    if (i < itemList.length){
-        //console.log('Invalid item: ' + invalidItem)
-        res.send('<script>window.alert("Product ' + invalidItem + ' is lower in stock than in your order. Please check your cart");window.location.href="/cart"</script>')
-    }
-    else{
-        var newList = []
-
-        itemList.forEach(item => {
-            // New list for newOrder query
-            newList.push({
-                name: item.name,
-                price: item.price,
-                quantity: item.quantity,
-                totalPrice: (item.quantity * item.price),
-                reference: item.reference,
-                productImage: {
-                    name: item.productImage.name,
-                    img: item.productImage.img
-                },
-                feedbackStatus: 'waiting'
-            })
-
-            // Decrease the amount of product ordered
-            Product.findOneAndUpdate({_id: item.reference}, { $inc: { stockQuantity: -item.quantity, sold: item.quantity} }).catch(e => {console.log(e.message)})
-        })
-
-        
-        const newOrder = new Order({
-            email: req.user.email,
-            itemList: newList,
-            totalCost: totalCost,
-            status: 'pending',
-        })
-
-        newOrder.save()
-        .then(() => {
-            //console.log('Order created')
-            res.send('<script>window.alert("Your order has been successfully created");window.location.href="/cart"</script>')
-
-            // Empty the cart
-            Cart.findOneAndUpdate({email: req.user.email}, {itemList: [], total: 0}).catch(e => {
-                console.log(e.message)
-            })
-        })
-        .catch(e => {
-            console.log(e.message)
-            res.send('<script>window.alert("Something went wrong, please try again later");window.location.href="/cart"</script>')
-        })
-    }
-
-    */
 }
 
 module.exports = {
