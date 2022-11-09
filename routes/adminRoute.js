@@ -14,7 +14,7 @@ const { customersAndProductsView, productDetailView, postCustomersAndProducts, u
 const { addProductView, postAddProduct } = require('../controllers/adminController/addProductController');
 const { userReportView, postUserReport, reportDetailView } = require('../controllers/adminController/userReport');
 const { editProductView, searchEditName, searchEditID, postEditProduct } = require('../controllers/adminController/editProductController');
-const { viewVoucher, viewVoucherPost } = require('../controllers/adminController/viewVoucherController');
+const { viewVoucher, voucherDetail, viewVoucherPost } = require('../controllers/adminController/viewVoucherController');
 const { viewAddVoucher, addVoucherPost } = require('../controllers/adminController/addVoucherController');
 const adminProtect = require('../auth/adminProtect');
 
@@ -77,6 +77,10 @@ router.post('/report', adminProtected, postUserReport);
 
 // GET view all voucher
 router.get('/viewVoucher', adminProtected, viewVoucher)
+// GET voucher detail
+router.get('/voucherDetail', adminProtected, voucherDetail)
+// POST delete voucher
+router.post('/deleteVoucher', adminProtected, viewVoucherPost)
 
 // GET view for addVoucher
 router.get('/addVoucher', adminProtected, viewAddVoucher)

@@ -35,3 +35,9 @@ body{
     overflow-y: scroll;
     padding-left: 2rem;
 }
+
+#detail-view{
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    padding-left: 2rem;
+}
